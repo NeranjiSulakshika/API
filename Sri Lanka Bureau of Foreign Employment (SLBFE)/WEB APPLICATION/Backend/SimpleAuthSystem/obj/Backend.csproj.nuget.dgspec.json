@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\SimpleAuthSystem\\SimpleAuthSystem.csproj": {}
+    "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\SimpleAuthSystem\\Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\SimpleAuthSystem\\SimpleAuthSystem.csproj": {
+    "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\SimpleAuthSystem\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\SimpleAuthSystem\\SimpleAuthSystem.csproj",
-        "projectName": "SimpleAuthSystem",
-        "projectPath": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\SimpleAuthSystem\\SimpleAuthSystem.csproj",
+        "projectUniqueName": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\SimpleAuthSystem\\Backend.csproj",
+        "projectName": "Backend",
+        "projectPath": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\SimpleAuthSystem\\Backend.csproj",
         "packagesPath": "C:\\Users\\EVIS\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\SimpleAuthSystem\\obj\\",
         "projectStyle": "PackageReference",
