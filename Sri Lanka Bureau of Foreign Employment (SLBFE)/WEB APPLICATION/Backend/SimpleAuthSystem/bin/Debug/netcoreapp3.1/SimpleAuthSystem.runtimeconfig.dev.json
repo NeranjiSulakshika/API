@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\EVIS\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\EVIS\\.nuget\\packages"
-    ]
-  }
-}
