@@ -15,6 +15,7 @@ namespace Backend.DataAccessLayer
         public Task<CitizenInformationByNICResponse> GetCitizenInformationByNIC(CitizenInformationByNICRequest request);
         public Task<CitizenInformationByQualificationResponse> GetCitizenInformationByQualification(CitizenInformationByQualificationRequest request);
         public Task<UpdateCitizenInformationResponse> UpdateCitizenInformationRequest(UpdateCitizenInformationRequest request);
+        public Task<DeleteCitizenResponse> DeleteCitizen(DeleteCitizenRequest request);
         public Task<ReadComplaintsResponse> ReadComplaints();
         public Task<CreateComplaintResponse> CreateComplaintInformation(CreateComplaintRequest request);
         public Task<UpdateComplaintInformationResponse> UpdateComplaintInformationRequest(UpdateComplaintInformationRequest request);

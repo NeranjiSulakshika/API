@@ -146,6 +146,24 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
+        [HttpDelete]
+        [Route("DeleteCitizen/{UserId}")]
+        public async Task<IActionResult> DeleteCitizen([FromHeader]DeleteCitizenRequest request)
+        {
+            DeleteCitizenResponse response = null;
+            try
+            {
+                response = await _authDL.DeleteCitizen(request);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
+            }
+
+            return Ok(response);
+        }
+
         [HttpPut]
         public Task UploadFile(IFormFile file)
         {

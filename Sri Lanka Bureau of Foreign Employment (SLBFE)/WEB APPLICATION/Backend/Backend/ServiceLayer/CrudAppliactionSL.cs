@@ -40,6 +40,11 @@ namespace Backend.ServiceLayer
             return await _appliactionRL.UpdateCitizenInformationRequest(request);
         }
 
+        public async Task<DeleteCitizenResponse> DeleteCitizen(DeleteCitizenRequest request)
+        {
+            return await _appliactionRL.DeleteCitizen(request);
+        }
+
         public async Task<ReadComplaintsResponse> ReadComplaints()
         {
             return await _appliactionRL.ReadComplaints();

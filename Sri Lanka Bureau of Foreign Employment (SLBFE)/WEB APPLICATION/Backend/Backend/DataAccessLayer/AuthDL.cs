@@ -386,6 +386,47 @@ namespace Backend.DataAccessLayer
             return resposne;
         }
 
+        public async Task<DeleteCitizenResponse> DeleteCitizen(DeleteCitizenRequest request)
+        {
+            DeleteCitizenResponse resposne = new DeleteCitizenResponse();
+            resposne.IsSuccess = true;
+            resposne.Message = "Successful";
+            try
+            {
+                if (_mySqlConnection != null)
+                {
+                    string SqlQuery = @"DELETE FROM slbfe.user_details WHERE UserId = @UserId";
+
+                    using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
+                    {
+                        sqlCommand.CommandType = System.Data.CommandType.Text;
+                        sqlCommand.CommandTimeout = ConnectionTimeOut;
+                        sqlCommand.Parameters.AddWithValue("?UserId", request.UserId);
+                        await _mySqlConnection.OpenAsync();
+                        int Status = await sqlCommand.ExecuteNonQueryAsync();
+                        if (Status <= 0)
+                        {
+                            resposne.IsSuccess = false;
+                            resposne.Message = "UnSuccessful";
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                resposne.IsSuccess = false;
+                resposne.Message = "Exception Message : " + ex.Message;
+            }
+            finally
+            {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+
+            return resposne;
+        }
+
         public async Task<ReadComplaintsResponse> ReadComplaints()
         {
             ReadComplaintsResponse response = new ReadComplaintsResponse();
