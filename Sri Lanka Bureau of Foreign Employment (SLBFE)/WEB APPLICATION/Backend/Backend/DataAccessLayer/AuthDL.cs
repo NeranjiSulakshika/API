@@ -310,7 +310,6 @@ namespace Backend.DataAccessLayer
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
