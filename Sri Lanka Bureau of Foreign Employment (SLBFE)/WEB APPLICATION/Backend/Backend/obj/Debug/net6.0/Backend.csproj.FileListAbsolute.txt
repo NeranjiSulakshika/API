@@ -41,7 +41,6 @@ C:\Users\EVIS\Downloads\API\API\Sri Lanka Bureau of Foreign Employment (SLBFE)\W
 C:\Users\EVIS\Downloads\API\API\Sri Lanka Bureau of Foreign Employment (SLBFE)\WEB APPLICATION\Backend\Backend\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\EVIS\Downloads\API\API\Sri Lanka Bureau of Foreign Employment (SLBFE)\WEB APPLICATION\Backend\Backend\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\EVIS\Downloads\API\API\Sri Lanka Bureau of Foreign Employment (SLBFE)\WEB APPLICATION\Backend\Backend\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\EVIS\Downloads\API\API\Sri Lanka Bureau of Foreign Employment (SLBFE)\WEB APPLICATION\Backend\Backend\obj\Debug\net6.0\Backend.csproj.AssemblyReference.cache
 C:\Users\EVIS\Downloads\API\API\Sri Lanka Bureau of Foreign Employment (SLBFE)\WEB APPLICATION\Backend\Backend\obj\Debug\net6.0\Backend.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\EVIS\Downloads\API\API\Sri Lanka Bureau of Foreign Employment (SLBFE)\WEB APPLICATION\Backend\Backend\obj\Debug\net6.0\Backend.AssemblyInfoInputs.cache
 C:\Users\EVIS\Downloads\API\API\Sri Lanka Bureau of Foreign Employment (SLBFE)\WEB APPLICATION\Backend\Backend\obj\Debug\net6.0\Backend.AssemblyInfo.cs

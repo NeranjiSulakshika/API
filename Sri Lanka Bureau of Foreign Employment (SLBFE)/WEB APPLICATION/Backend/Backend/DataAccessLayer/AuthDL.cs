@@ -6,7 +6,6 @@ using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using MySqlConnector;
-using Backend.CommonUtility;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.DataAccessLayer
@@ -21,6 +20,57 @@ namespace Backend.DataAccessLayer
         {
             _configuration = configuration;
             _mySqlConnection = new MySqlConnection(_configuration["ConnectionStrings:MySqlDBConnectionString"]);
+        }
+
+        public async Task<ReadAdminResponse> GetAdmin()
+        {
+            ReadAdminResponse response = new ReadAdminResponse();
+            response.readAdmin = new List<GetAdmin>();
+            response.IsSuccess = true;
+            response.Message = "Successful";
+            try
+            {
+                string SqlQuery = @"SELECT * FROM slbfe.admin ";
+
+                using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
+                {
+                    await _mySqlConnection.OpenAsync();
+                    using (DbDataReader _sqlDataReader = await sqlCommand.ExecuteReaderAsync())
+                    {
+                        if (_sqlDataReader.HasRows)
+                        {
+                            while (await _sqlDataReader.ReadAsync())
+                            {
+                                GetAdmin getResponse = new GetAdmin();
+
+                                getResponse.AdminId = _sqlDataReader["AdminId"] != DBNull.Value ? Convert.ToInt32(_sqlDataReader["AdminId"]) : 0;
+
+                                getResponse.UserName = _sqlDataReader["UserName"] != DBNull.Value ? _sqlDataReader["UserName"].ToString() : string.Empty;
+
+                                getResponse.Password = _sqlDataReader["Password"] != DBNull.Value ? _sqlDataReader["Password"].ToString() : string.Empty;
+
+                                response.readAdmin.Add(getResponse);
+                            }
+                        }
+                        else
+                        {
+                            response.Message = "No data Return";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
+            }
+            finally
+            {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+
+            return response;
         }
 
         public async Task<SignInResponse> SignIn(SignInRequest request)
@@ -195,6 +245,104 @@ namespace Backend.DataAccessLayer
             return response;
         }
 
+        public async Task<CitizenInformationByNICResponse> GetCitizenInformationByNIC(CitizenInformationByNICRequest request)
+        {
+            CitizenInformationByNICResponse response = new CitizenInformationByNICResponse();
+            response.IsSuccess = true;
+            response.Message = "Successful";
+            try
+            {
+                string SqlQuery = @"SELECT * FROM slbfe.user_details WHERE NIC = @NIC AND Affiliation = 'Citizen'";
+
+                using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
+                {
+                    sqlCommand.CommandType = System.Data.CommandType.Text;
+                    sqlCommand.CommandTimeout = ConnectionTimeOut;
+                    sqlCommand.Parameters.AddWithValue("@NIC", request.NIC);
+                    await _mySqlConnection.OpenAsync();
+                    using (DbDataReader _sqlDataReader = await sqlCommand.ExecuteReaderAsync())
+                    {
+                        if (_sqlDataReader.HasRows)
+                        {
+                            await _sqlDataReader.ReadAsync();
+                            response.getCitizenInformationByNIC = new GetCitizenInformationByNIC();
+
+                            response.getCitizenInformationByNIC.Name = _sqlDataReader["Name"] != DBNull.Value ? _sqlDataReader["Name"].ToString() : string.Empty;
+                            response.getCitizenInformationByNIC.Address = _sqlDataReader["Address"] != DBNull.Value ? _sqlDataReader["Address"].ToString() : string.Empty;
+                            response.getCitizenInformationByNIC.Age = _sqlDataReader["Age"] != DBNull.Value ? Convert.ToInt32(_sqlDataReader["Age"]) : 0;
+                            response.getCitizenInformationByNIC.Profession = _sqlDataReader["Profession"] != DBNull.Value ? _sqlDataReader["Profession"].ToString() : string.Empty;
+                            response.getCitizenInformationByNIC.Email = _sqlDataReader["Email"] != DBNull.Value ? _sqlDataReader["Email"].ToString() : string.Empty;
+                        }
+                        else
+                        {
+                            response.Message = "No Citizen Found";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
+            }
+            finally
+            {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+
+            return response;
+        }
+
+        public async Task<CitizenInformationByQualificationResponse> GetCitizenInformationByQualification(CitizenInformationByQualificationRequest request)
+        {
+            CitizenInformationByQualificationResponse response = new CitizenInformationByQualificationResponse();
+            response.IsSuccess = true;
+            response.Message = "Successful";
+            try
+            {
+                string SqlQuery = @"SELECT * FROM slbfe.user_details WHERE Qualification = @Qualification AND Affiliation = 'Citizen'";
+
+                using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
+                {
+                    sqlCommand.CommandType = System.Data.CommandType.Text;
+                    sqlCommand.CommandTimeout = ConnectionTimeOut;
+                    sqlCommand.Parameters.AddWithValue("@Qualification", request.Qualification);
+                    await _mySqlConnection.OpenAsync();
+                    using (DbDataReader _sqlDataReader = await sqlCommand.ExecuteReaderAsync())
+                    {
+                        if (_sqlDataReader.HasRows)
+                        {
+                            await _sqlDataReader.ReadAsync();
+                            response.getCitizenInformationByQualification = new GetCitizenInformationByQualification();
+
+                            response.getCitizenInformationByQualification.Name = _sqlDataReader["Name"] != DBNull.Value ? _sqlDataReader["Name"].ToString() : string.Empty;
+                            response.getCitizenInformationByQualification.Address = _sqlDataReader["Address"] != DBNull.Value ? _sqlDataReader["Address"].ToString() : string.Empty;
+                            response.getCitizenInformationByQualification.Age = _sqlDataReader["Age"] != DBNull.Value ? Convert.ToInt32(_sqlDataReader["Age"]) : 0;
+                            response.getCitizenInformationByQualification.Profession = _sqlDataReader["Profession"] != DBNull.Value ? _sqlDataReader["Profession"].ToString() : string.Empty;
+                            response.getCitizenInformationByQualification.Email = _sqlDataReader["Email"] != DBNull.Value ? _sqlDataReader["Email"].ToString() : string.Empty;
+                        }
+                        else
+                        {
+                            response.Message = "No Citizen Found";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
+            }
+            finally
+            {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+
+            return response;
+        }
+
         public async Task<UpdateCitizenInformationResponse> UpdateCitizenInformationRequest(UpdateCitizenInformationRequest request)
         {
             UpdateCitizenInformationResponse resposne = new UpdateCitizenInformationResponse();
@@ -236,6 +384,57 @@ namespace Backend.DataAccessLayer
             }
 
             return resposne;
+        }
+
+        public async Task<ReadComplaintsResponse> ReadComplaints()
+        {
+            ReadComplaintsResponse response = new ReadComplaintsResponse();
+            response.readComplaints = new List<ReadComplaints>();
+            response.IsSuccess = true;
+            response.Message = "Successful";
+            try
+            {
+                string SqlQuery = @"SELECT * FROM slbfe.complaints ";
+
+                using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
+                {
+                    await _mySqlConnection.OpenAsync();
+                    using (DbDataReader _sqlDataReader = await sqlCommand.ExecuteReaderAsync())
+                    {
+                        if (_sqlDataReader.HasRows)
+                        {
+                            while (await _sqlDataReader.ReadAsync())
+                            {
+                                ReadComplaints getResponse = new ReadComplaints();
+
+                                getResponse.ComplaintId = _sqlDataReader["ComplaintId"] != DBNull.Value ? Convert.ToInt32(_sqlDataReader["ComplaintId"]) : 0;
+
+                                getResponse.Complaint = _sqlDataReader["Complaint"] != DBNull.Value ? _sqlDataReader["Complaint"].ToString() : string.Empty;
+
+                                getResponse.Reply = _sqlDataReader["Reply"] != DBNull.Value ? _sqlDataReader["Reply"].ToString() : string.Empty;
+
+                                response.readComplaints.Add(getResponse);
+                            }
+                        }
+                        else
+                        {
+                            response.Message = "No data Return";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
+            }
+            finally
+            {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+
+            return response;
         }
 
         public async Task<CreateComplaintResponse> CreateComplaintInformation(CreateComplaintRequest request)

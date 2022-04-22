@@ -15,11 +15,9 @@ namespace Backend.ServiceLayer
             _appliactionRL = appliactionRL;
         }
 
-        public async Task<CreateComplaintResponse> CreateComplaintInformation(CreateComplaintRequest request)
+        public async Task<ReadAdminResponse> GetAdmin()
         {
-
-            return await _appliactionRL.CreateComplaintInformation(request);
-
+            return await _appliactionRL.GetAdmin();
         }
 
         public async Task<ReadCitizenInformationResponse> ReadCitizenInformation()
@@ -27,9 +25,31 @@ namespace Backend.ServiceLayer
             return await _appliactionRL.ReadCitizenInformation(); 
         }
 
+        public async Task<CitizenInformationByNICResponse> GetCitizenInformationByNIC(CitizenInformationByNICRequest request)
+        {
+            return await _appliactionRL.GetCitizenInformationByNIC(request);
+        }
+
+        public async Task<CitizenInformationByQualificationResponse> GetCitizenInformationByQualification(CitizenInformationByQualificationRequest request)
+        {
+            return await _appliactionRL.GetCitizenInformationByQualification(request);
+        }
+
         public async Task<UpdateCitizenInformationResponse> UpdateCitizenInformation(UpdateCitizenInformationRequest request)
         {
             return await _appliactionRL.UpdateCitizenInformationRequest(request);
+        }
+
+        public async Task<ReadComplaintsResponse> ReadComplaints()
+        {
+            return await _appliactionRL.ReadComplaints();
+        }
+
+        public async Task<CreateComplaintResponse> CreateComplaintInformation(CreateComplaintRequest request)
+        {
+
+            return await _appliactionRL.CreateComplaintInformation(request);
+
         }
 
         public async Task<UpdateComplaintInformationResponse> UpdateComplaintInformation(UpdateComplaintInformationRequest request)

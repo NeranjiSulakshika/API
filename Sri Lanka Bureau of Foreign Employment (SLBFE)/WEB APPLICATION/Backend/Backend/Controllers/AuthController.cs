@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
 {
@@ -19,7 +20,26 @@ namespace Backend.Controllers
             _authDL = authDL;
         }
 
+        [HttpGet]
+        [Route("Get")]
+        public async Task<IActionResult> GetAdmin()
+        {
+            ReadAdminResponse response = null;
+            try
+            {
+                response = await _authDL.GetAdmin();
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
+            }
+
+            return Ok(response);
+        }
+
         [HttpPost]
+        [Route("Create")]
         public async Task<ActionResult> SignUp(SignUpRequest request)
         {
             SignUpResponse response = new SignUpResponse();
@@ -36,8 +56,9 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> SignIn(SignInRequest request)
+        [HttpGet]
+        [Route("Get/{Email}, {Password}, {Affiliation}")]
+        public async Task<ActionResult> SignIn([FromHeader] SignInRequest request)
         {
             SignInResponse response = new SignInResponse();
             try
@@ -54,7 +75,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        [Route("ReadCitizenInformation")]
+        [Route("GetCitizenList")]
         public async Task<IActionResult> ReadCitizenInformation()
         {
             ReadCitizenInformationResponse response = null;
@@ -71,8 +92,44 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("GetCitizenInformationByNIC/{NIC}")]
+        public async Task<IActionResult> CitizenInformationByNIC([FromHeader]CitizenInformationByNICRequest request)
+        {
+            CitizenInformationByNICResponse response = null;
+            try
+            {
+                response = await _authDL.GetCitizenInformationByNIC(request);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("GetCitizenInformationByQualification/{Qualification}")]
+        public async Task<IActionResult> CitizenInformationByQualification([FromHeader] CitizenInformationByQualificationRequest request)
+        {
+            CitizenInformationByQualificationResponse response = null;
+            try
+            {
+                response = await _authDL.GetCitizenInformationByQualification(request);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
+            }
+
+            return Ok(response);
+        }
+
         [HttpPut]
-        [Route("UpdateCitizenInformation")]
+        [Route("UpdateCitizen")]
         public async Task<IActionResult> UpdateCitizenInformation(UpdateCitizenInformationRequest request)
         {
             UpdateCitizenInformationResponse response = null;
@@ -89,13 +146,32 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+        [HttpPut]
         public Task UploadFile(IFormFile file)
         {
             return Task.CompletedTask;
         }
 
+        [HttpGet]
+        [Route("GetComplaintsList")]
+        public async Task<IActionResult> ReadComplaints()
+        {
+            ReadComplaintsResponse response = null;
+            try
+            {
+                response = await _authDL.ReadComplaints();
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
+            }
+
+            return Ok(response);
+        }
+
         [HttpPost]
+        [Route("CreateComplaint")]
         public async Task<ActionResult> CreateComplaint(CreateComplaintRequest request)
         {
             CreateComplaintResponse response = new CreateComplaintResponse();
@@ -113,7 +189,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateComplaintInformation")]
+        [Route("ReplyComplaint")]
         public async Task<IActionResult> UpdateComplaintInformation(UpdateComplaintInformationRequest request)
         {
             UpdateComplaintInformationResponse response = null;
