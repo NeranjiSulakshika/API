@@ -17,6 +17,5 @@ namespace Backend.ServiceLayer
         public Task<DeleteCitizenResponse> DeleteCitizen(DeleteCitizenRequest response);
         public Task<UpdateComplaintInformationResponse> UpdateComplaintInformation(UpdateComplaintInformationRequest request);
         public Task<ReadComplaintsResponse> ReadComplaints();
-        //public Task<SearchInformationByIdResponse> SearchInformationById(SearchInformationByIdRequest request);
     }
 }
