@@ -22,12 +22,64 @@ namespace Backend.DataAccessLayer
             _mySqlConnection = new MySqlConnection(_configuration["ConnectionStrings:MySqlDBConnectionString"]);
         }
 
-        public async Task<ReadAdminResponse> GetAdmin()
+
+        /// <summary>
+        /// Admin Login
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<ReadAdminResponse> GetAdmin(GetAdmin request)
         {
             ReadAdminResponse response = new ReadAdminResponse();
             response.readAdmin = new List<GetAdmin>();
             response.IsSuccess = true;
             response.Message = "Successful";
+
+            try
+            {
+                if (_mySqlConnection.State != System.Data.ConnectionState.Open)
+                {
+                    await _mySqlConnection.OpenAsync();
+                }
+
+                string SqlQuery = @"SELECT * 
+                                    FROM slbfe.admin 
+                                    WHERE UserName=@UserName AND Password=@PassWord;";
+
+                using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
+                {
+                    sqlCommand.CommandType = System.Data.CommandType.Text;
+                    sqlCommand.CommandTimeout = 180;
+                    sqlCommand.Parameters.AddWithValue("@UserName", request.UserName);
+                    sqlCommand.Parameters.AddWithValue("@PassWord", request.Password);
+
+                    using (DbDataReader dataReader = await sqlCommand.ExecuteReaderAsync())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            response.Message = "Login Successfull";
+                        }
+                        else
+                        {
+                            response.IsSuccess = false;
+                            response.Message = "Login Failed";
+                            return response;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+            finally
+            {
+
+            }
+
+            return response;
+            /*
             try
             {
                 string SqlQuery = @"SELECT * FROM slbfe.admin ";
@@ -43,7 +95,7 @@ namespace Backend.DataAccessLayer
                             {
                                 GetAdmin getResponse = new GetAdmin();
 
-                                getResponse.AdminId = _sqlDataReader["AdminId"] != DBNull.Value ? Convert.ToInt32(_sqlDataReader["AdminId"]) : 0;
+                                //getResponse.AdminId = _sqlDataReader["AdminId"] != DBNull.Value ? Convert.ToInt32(_sqlDataReader["AdminId"]) : 0;
 
                                 getResponse.UserName = _sqlDataReader["UserName"] != DBNull.Value ? _sqlDataReader["UserName"].ToString() : string.Empty;
 
@@ -70,9 +122,15 @@ namespace Backend.DataAccessLayer
                 await _mySqlConnection.DisposeAsync();
             }
 
-            return response;
+            return response;*/
         }
 
+
+        /// <summary>
+        /// Sign In
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<SignInResponse> SignIn(SignInRequest request)
         {
             SignInResponse response = new SignInResponse();
@@ -126,6 +184,12 @@ namespace Backend.DataAccessLayer
             return response;
         }
 
+
+        /// <summary>
+        /// Sign Up
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<SignUpResponse> SignUp(SignUpRequest request)
         {
             SignUpResponse response = new SignUpResponse();
@@ -184,6 +248,11 @@ namespace Backend.DataAccessLayer
             return response;
         }
 
+
+        /// <summary>
+        /// Get Citizen Information List
+        /// </summary>
+        /// <returns></returns>
         public async Task<ReadCitizenInformationResponse> ReadCitizenInformation()
         {
             ReadCitizenInformationResponse response = new ReadCitizenInformationResponse();
@@ -245,6 +314,12 @@ namespace Backend.DataAccessLayer
             return response;
         }
 
+
+        /// <summary>
+        /// Get Citizen Information By NIC
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<CitizenInformationByNICResponse> GetCitizenInformationByNIC(CitizenInformationByNICRequest request)
         {
             CitizenInformationByNICResponse response = new CitizenInformationByNICResponse();
@@ -294,6 +369,12 @@ namespace Backend.DataAccessLayer
             return response;
         }
 
+
+        /// <summary>
+        /// Get Citizen Information By Qualification
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<CitizenInformationByQualificationResponse> GetCitizenInformationByQualification(CitizenInformationByQualificationRequest request)
         {
             CitizenInformationByQualificationResponse response = new CitizenInformationByQualificationResponse();
@@ -343,6 +424,12 @@ namespace Backend.DataAccessLayer
             return response;
         }
 
+
+        /// <summary>
+        /// Update Citizen Information
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<UpdateCitizenInformationResponse> UpdateCitizenInformationRequest(UpdateCitizenInformationRequest request)
         {
             UpdateCitizenInformationResponse resposne = new UpdateCitizenInformationResponse();
@@ -386,6 +473,12 @@ namespace Backend.DataAccessLayer
             return resposne;
         }
 
+
+        /// <summary>
+        /// Delete Citizen Account
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<DeleteCitizenResponse> DeleteCitizen(DeleteCitizenRequest request)
         {
             DeleteCitizenResponse resposne = new DeleteCitizenResponse();
@@ -427,6 +520,11 @@ namespace Backend.DataAccessLayer
             return resposne;
         }
 
+
+        /// <summary>
+        /// Get Complaints List
+        /// </summary>
+        /// <returns></returns>
         public async Task<ReadComplaintsResponse> ReadComplaints()
         {
             ReadComplaintsResponse response = new ReadComplaintsResponse();
@@ -478,6 +576,12 @@ namespace Backend.DataAccessLayer
             return response;
         }
 
+
+        /// <summary>
+        /// Create Complaint
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<CreateComplaintResponse> CreateComplaintInformation(CreateComplaintRequest request)
         {
             CreateComplaintResponse response = new CreateComplaintResponse();
@@ -523,6 +627,12 @@ namespace Backend.DataAccessLayer
             return response;
         }
 
+
+        /// <summary>
+        /// Reply for Complaint
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<UpdateComplaintInformationResponse> UpdateComplaintInformationRequest(UpdateComplaintInformationRequest request)
         {
             UpdateComplaintInformationResponse resposne = new UpdateComplaintInformationResponse();

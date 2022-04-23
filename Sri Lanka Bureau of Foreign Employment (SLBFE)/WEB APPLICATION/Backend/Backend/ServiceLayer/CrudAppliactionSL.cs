@@ -15,61 +15,76 @@ namespace Backend.ServiceLayer
             _appliactionRL = appliactionRL;
         }
 
-        public async Task<ReadAdminResponse> GetAdmin()
+        /// <summary>
+        /// Admin Login
+        /// </summary>
+        public async Task<ReadAdminResponse> GetAdmin(GetAdmin request)
         {
-            return await _appliactionRL.GetAdmin();
+            return await _appliactionRL.GetAdmin(request);
         }
 
+        /// <summary>
+        /// Get Citizen Information
+        /// </summary>
         public async Task<ReadCitizenInformationResponse> ReadCitizenInformation()
         {
-            return await _appliactionRL.ReadCitizenInformation(); 
+            return await _appliactionRL.ReadCitizenInformation();
         }
 
+        /// <summary>
+        /// Get Citizen Information By NIC
+        /// </summary>
         public async Task<CitizenInformationByNICResponse> GetCitizenInformationByNIC(CitizenInformationByNICRequest request)
         {
             return await _appliactionRL.GetCitizenInformationByNIC(request);
         }
 
+        /// <summary>
+        /// Get Citizen Information By Qualification
+        /// </summary>
         public async Task<CitizenInformationByQualificationResponse> GetCitizenInformationByQualification(CitizenInformationByQualificationRequest request)
         {
             return await _appliactionRL.GetCitizenInformationByQualification(request);
         }
 
+        /// <summary>
+        /// Update Citizen Information
+        /// </summary>
         public async Task<UpdateCitizenInformationResponse> UpdateCitizenInformation(UpdateCitizenInformationRequest request)
         {
             return await _appliactionRL.UpdateCitizenInformationRequest(request);
         }
 
+        /// <summary>
+        /// Delete Citizen Account
+        /// </summary>
         public async Task<DeleteCitizenResponse> DeleteCitizen(DeleteCitizenRequest request)
         {
             return await _appliactionRL.DeleteCitizen(request);
         }
 
+        /// <summary>
+        /// Get Complaints List
+        /// </summary>
         public async Task<ReadComplaintsResponse> ReadComplaints()
         {
             return await _appliactionRL.ReadComplaints();
         }
 
+        /// <summary>
+        /// Create a Complaint 
+        /// </summary>
         public async Task<CreateComplaintResponse> CreateComplaintInformation(CreateComplaintRequest request)
         {
-
             return await _appliactionRL.CreateComplaintInformation(request);
-
         }
 
+        /// <summary>
+        /// Reply for Complaints 
+        /// </summary>
         public async Task<UpdateComplaintInformationResponse> UpdateComplaintInformation(UpdateComplaintInformationRequest request)
         {
             return await _appliactionRL.UpdateComplaintInformationRequest(request);
         }
-
-        /*public async Task<DeleteInformationResponse> DeleteInformation(DeleteInformationRequest request)
-        {
-            return await _crudAppliactionRL.DeleteInformation(request);
-        }
-
-        public async Task<SearchInformationByIdResponse> SearchInformationById(SearchInformationByIdRequest request)
-        {
-            return await _crudAppliactionRL.SearchInformationById(request);
-        }*/
     }
 }

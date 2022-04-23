@@ -20,14 +20,19 @@ namespace Backend.Controllers
             _authDL = authDL;
         }
 
+
+        /// <summary>
+        /// Admin Login
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        [Route("Get")]
-        public async Task<IActionResult> GetAdmin()
+        [Route("Get/{UserName}, {Password}")]
+        public async Task<IActionResult> GetAdmin([FromHeader]GetAdmin request)
         {
             ReadAdminResponse response = null;
             try
             {
-                response = await _authDL.GetAdmin();
+                response = await _authDL.GetAdmin(request);
             }
             catch (Exception ex)
             {
@@ -38,6 +43,12 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Sign Up
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Create")]
         public async Task<ActionResult> SignUp(SignUpRequest request)
@@ -56,6 +67,12 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Sign In
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("Get/{Email}, {Password}, {Affiliation}")]
         public async Task<ActionResult> SignIn([FromHeader] SignInRequest request)
@@ -74,6 +91,11 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Get Citizen Information List
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetCitizenList")]
         public async Task<IActionResult> ReadCitizenInformation()
@@ -92,6 +114,12 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Get Citizen Information By NIC
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetCitizenInformationByNIC/{NIC}")]
         public async Task<IActionResult> CitizenInformationByNIC([FromHeader]CitizenInformationByNICRequest request)
@@ -110,6 +138,12 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Get Citizen Information By Qualification
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetCitizenInformationByQualification/{Qualification}")]
         public async Task<IActionResult> CitizenInformationByQualification([FromHeader] CitizenInformationByQualificationRequest request)
@@ -128,6 +162,12 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Update Citizen's BirthCertificate, CV, Passport & Qualifications
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("UpdateCitizen")]
         public async Task<IActionResult> UpdateCitizenInformation(UpdateCitizenInformationRequest request)
@@ -146,6 +186,12 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Delete Citizen Account
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteCitizen/{UserId}")]
         public async Task<IActionResult> DeleteCitizen([FromHeader]DeleteCitizenRequest request)
@@ -170,6 +216,11 @@ namespace Backend.Controllers
             return Task.CompletedTask;
         }
 
+
+        /// <summary>
+        /// Get Complaints List
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetComplaintsList")]
         public async Task<IActionResult> ReadComplaints()
@@ -188,6 +239,12 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Ceate a Complaint
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("CreateComplaint")]
         public async Task<ActionResult> CreateComplaint(CreateComplaintRequest request)
@@ -206,6 +263,12 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Reply for Complaints
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("ReplyComplaint")]
         public async Task<IActionResult> UpdateComplaintInformation(UpdateComplaintInformationRequest request)
