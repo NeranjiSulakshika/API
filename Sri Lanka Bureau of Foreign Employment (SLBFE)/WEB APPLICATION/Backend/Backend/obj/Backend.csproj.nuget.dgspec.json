@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dhanuja Supun\\Documents\\GitHub\\HCI\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj": {}
+    "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dhanuja Supun\\Documents\\GitHub\\HCI\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj": {
+    "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dhanuja Supun\\Documents\\GitHub\\HCI\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
+        "projectUniqueName": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "C:\\Users\\Dhanuja Supun\\Documents\\GitHub\\HCI\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
-        "packagesPath": "C:\\Users\\Dhanuja Supun\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dhanuja Supun\\Documents\\GitHub\\HCI\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\obj\\",
+        "projectPath": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
+        "packagesPath": "C:\\Users\\EVIS\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Dhanuja Supun\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\EVIS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,13 +22,9 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-<<<<<<< HEAD
           "https://api.nuget.org/v3/index.json": {},
           "https://pkgs.dev.azure.com/e-vis/a73aec65-3042-4a88-a530-5e028604112e/_packaging/PermAssist_Feed/nuget/v3/index.json": {},
           "https://www.myget.org/F/applicationinsights-sdk-labs/": {}
-=======
-          "https://api.nuget.org/v3/index.json": {}
->>>>>>> 41cfa2b90e553af81352799647ea47e60f325067
         },
         "frameworks": {
           "net6.0": {
@@ -45,7 +41,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-<<<<<<< HEAD
           "dependencies": {
             "MySql.Data": {
               "target": "Package",
@@ -68,8 +63,6 @@
               "version": "[2.0.0, )"
             }
           },
-=======
->>>>>>> 41cfa2b90e553af81352799647ea47e60f325067
           "imports": [
             "net461",
             "net462",
@@ -80,7 +73,15 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
