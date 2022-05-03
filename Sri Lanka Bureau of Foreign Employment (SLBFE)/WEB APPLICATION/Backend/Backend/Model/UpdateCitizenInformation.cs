@@ -8,8 +8,7 @@ namespace Backend.Model
     public class UpdateCitizenInformationRequest
     {
         public int UserId { get; set; }
-        public string? Name { get; set; }
-        public int Age { get; set; }
+        public string Qualification { get; set; }
     }
 
     public class UpdateCitizenInformationResponse

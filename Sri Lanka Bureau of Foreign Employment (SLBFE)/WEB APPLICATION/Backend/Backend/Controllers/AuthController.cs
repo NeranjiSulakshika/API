@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace Backend.Controllers
 {
@@ -15,9 +16,12 @@ namespace Backend.Controllers
     public class AuthController : ControllerBase
     {
         public readonly IAuthDL _authDL;
-        public AuthController(IAuthDL authDL)
+        public static IWebHostEnvironment _env;
+
+        public AuthController(IAuthDL authDL, IWebHostEnvironment env)
         {
             _authDL = authDL;
+            _env = env;
         }
 
 
@@ -25,6 +29,7 @@ namespace Backend.Controllers
         /// Admin Login
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("Get/{UserName}, {Password}")]
         public async Task<IActionResult> GetAdmin([FromHeader]GetAdmin request)
@@ -49,6 +54,7 @@ namespace Backend.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost]
         [Route("Create")]
         public async Task<ActionResult> SignUp(SignUpRequest request)
@@ -73,8 +79,9 @@ namespace Backend.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
-        [Route("Get/{Email}, {Password}, {Affiliation}")]
+        [Route("Get/{Email}/{Password}/{Affiliation}")]
         public async Task<ActionResult> SignIn([FromHeader] SignInRequest request)
         {
             SignInResponse response = new SignInResponse();
@@ -96,6 +103,7 @@ namespace Backend.Controllers
         /// Get Citizen Information List
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetCitizenList")]
         public async Task<IActionResult> ReadCitizenInformation()
@@ -120,6 +128,7 @@ namespace Backend.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetCitizenInformationByNIC/{NIC}")]
         public async Task<IActionResult> CitizenInformationByNIC([FromHeader]CitizenInformationByNICRequest request)
@@ -144,6 +153,7 @@ namespace Backend.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetCitizenInformationByQualification/{Qualification}")]
         public async Task<IActionResult> CitizenInformationByQualification([FromHeader] CitizenInformationByQualificationRequest request)
@@ -168,6 +178,7 @@ namespace Backend.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPut]
         [Route("UpdateCitizen")]
         public async Task<IActionResult> UpdateCitizenInformation(UpdateCitizenInformationRequest request)
@@ -188,10 +199,49 @@ namespace Backend.Controllers
 
 
         /// <summary>
+        /// Upload Citizen's BirthCertificate, CV, Passport
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<string> UploadFile(IFormFile file)
+        {
+            string filename = "";
+
+            try
+            {
+                var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
+                filename = "File_" + DateTime.Now.TimeOfDay.Milliseconds + extension;
+                var pathBuilt = Path.Combine(Directory.GetCurrentDirectory(), "Files");
+
+                if (!Directory.Exists(pathBuilt))
+                {
+                    Directory.CreateDirectory(pathBuilt);
+                }
+
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "Files", filename);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+
+            return filename;
+        }
+
+
+        /// <summary>
         /// Delete Citizen Account
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpDelete]
         [Route("DeleteCitizen/{UserId}")]
         public async Task<IActionResult> DeleteCitizen([FromHeader]DeleteCitizenRequest request)
@@ -210,17 +260,12 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
-        [HttpPut]
-        public Task UploadFile(IFormFile file)
-        {
-            return Task.CompletedTask;
-        }
-
 
         /// <summary>
         /// Get Complaints List
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetComplaintsList")]
         public async Task<IActionResult> ReadComplaints()
@@ -245,6 +290,7 @@ namespace Backend.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost]
         [Route("CreateComplaint")]
         public async Task<ActionResult> CreateComplaint(CreateComplaintRequest request)
@@ -269,6 +315,7 @@ namespace Backend.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPut]
         [Route("ReplyComplaint")]
         public async Task<IActionResult> UpdateComplaintInformation(UpdateComplaintInformationRequest request)

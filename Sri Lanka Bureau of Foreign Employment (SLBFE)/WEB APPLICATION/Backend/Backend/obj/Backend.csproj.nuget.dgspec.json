@@ -23,7 +23,8 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {},
-          "https://pkgs.dev.azure.com/e-vis/a73aec65-3042-4a88-a530-5e028604112e/_packaging/PermAssist_Feed/nuget/v3/index.json": {}
+          "https://pkgs.dev.azure.com/e-vis/a73aec65-3042-4a88-a530-5e028604112e/_packaging/PermAssist_Feed/nuget/v3/index.json": {},
+          "https://www.myget.org/F/applicationinsights-sdk-labs/": {}
         },
         "frameworks": {
           "net6.0": {
@@ -41,13 +42,25 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.29, )"
+            },
             "MySqlConnector": {
               "target": "Package",
               "version": "[2.1.8, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
+            },
+            "WebProfileBuilder": {
+              "target": "Package",
+              "version": "[2.0.0, )"
             }
           },
           "imports": [

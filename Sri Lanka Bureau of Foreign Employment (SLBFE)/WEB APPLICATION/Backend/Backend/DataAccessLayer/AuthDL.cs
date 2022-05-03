@@ -79,50 +79,6 @@ namespace Backend.DataAccessLayer
             }
 
             return response;
-            /*
-            try
-            {
-                string SqlQuery = @"SELECT * FROM slbfe.admin ";
-
-                using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
-                {
-                    await _mySqlConnection.OpenAsync();
-                    using (DbDataReader _sqlDataReader = await sqlCommand.ExecuteReaderAsync())
-                    {
-                        if (_sqlDataReader.HasRows)
-                        {
-                            while (await _sqlDataReader.ReadAsync())
-                            {
-                                GetAdmin getResponse = new GetAdmin();
-
-                                //getResponse.AdminId = _sqlDataReader["AdminId"] != DBNull.Value ? Convert.ToInt32(_sqlDataReader["AdminId"]) : 0;
-
-                                getResponse.UserName = _sqlDataReader["UserName"] != DBNull.Value ? _sqlDataReader["UserName"].ToString() : string.Empty;
-
-                                getResponse.Password = _sqlDataReader["Password"] != DBNull.Value ? _sqlDataReader["Password"].ToString() : string.Empty;
-
-                                response.readAdmin.Add(getResponse);
-                            }
-                        }
-                        else
-                        {
-                            response.Message = "No data Return";
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Message = "Exception Message : " + ex.Message;
-            }
-            finally
-            {
-                await _mySqlConnection.CloseAsync();
-                await _mySqlConnection.DisposeAsync();
-            }
-
-            return response;*/
         }
 
 
@@ -426,7 +382,7 @@ namespace Backend.DataAccessLayer
 
 
         /// <summary>
-        /// Update Citizen Information
+        /// Update Citizen Qualification
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -439,21 +395,20 @@ namespace Backend.DataAccessLayer
             {
                 if (_mySqlConnection != null)
                 {
-                    string SqlQuery = @"UPDATE slbfe.user_details SET Name= @Name , Age=@Age where UserId=@UserId ";
+                    string SqlQuery = @"UPDATE slbfe.user_details SET Qualification=@Qualification where UserId=@UserId ";
 
                     using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                     {
                         sqlCommand.CommandType = System.Data.CommandType.Text;
                         sqlCommand.CommandTimeout = ConnectionTimeOut;
                         sqlCommand.Parameters.AddWithValue("@UserId", request.UserId);
-                        sqlCommand.Parameters.AddWithValue("@Name", request.Name);
-                        sqlCommand.Parameters.AddWithValue("@Age", request.Age);
+                        sqlCommand.Parameters.AddWithValue("@Qualification", request.Qualification);
                         await _mySqlConnection.OpenAsync();
                         int Status = await sqlCommand.ExecuteNonQueryAsync();
                         if (Status <= 0)
                         {
                             resposne.IsSuccess = false;
-                            resposne.Message = "Information Not Update";
+                            resposne.Message = "Informations Not Update";
                         }
                     }
                 }
