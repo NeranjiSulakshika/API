@@ -1,5 +1,6 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "apx90+QIS9XgxJ3EkEP0tTKuYmz56HSrAFJsmtkVv/DauqSFB4tvwIRxkbUuIfmtxXrbSXNyScjoCLGlIbW9qg==",
   "success": true,
   "projectFilePath": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
@@ -33,5 +34,11 @@
     "C:\\Users\\EVIS\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
     "C:\\Users\\EVIS\\.nuget\\packages\\webprofilebuilder\\2.0.0\\webprofilebuilder.2.0.0.nupkg.sha512"
   ],
+=======
+  "dgSpecHash": "tDGuYp6XjuOm3596fsvpIq6K7yIeSJv5uPE31D3q7SACPqgJ0yuOML1cjlLJFXuymgWfEq9NBMi2fGeBB4QCbw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Dhanuja Supun\\Documents\\GitHub\\HCI\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
+  "expectedPackageFiles": [],
+>>>>>>> 41cfa2b90e553af81352799647ea47e60f325067
   "logs": []
 }
