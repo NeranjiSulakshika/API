@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj": {}
+    "C:\\Users\\NERANJI SULAKSHIKA\\Documents\\API\\Project\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj": {
+    "C:\\Users\\NERANJI SULAKSHIKA\\Documents\\API\\Project\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
+        "projectUniqueName": "C:\\Users\\NERANJI SULAKSHIKA\\Documents\\API\\Project\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
-        "packagesPath": "C:\\Users\\EVIS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\obj\\",
+        "projectPath": "C:\\Users\\NERANJI SULAKSHIKA\\Documents\\API\\Project\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
+        "packagesPath": "C:\\Users\\NERANJI SULAKSHIKA\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\NERANJI SULAKSHIKA\\Documents\\API\\Project\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\EVIS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\NERANJI SULAKSHIKA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,9 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://pkgs.dev.azure.com/e-vis/a73aec65-3042-4a88-a530-5e028604112e/_packaging/PermAssist_Feed/nuget/v3/index.json": {},
-          "https://www.myget.org/F/applicationinsights-sdk-labs/": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -42,6 +44,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "ExcelDataReader": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
+            "ExcelDataReader.DataSet": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
             "MySql.Data": {
               "target": "Package",
               "version": "[8.0.29, )"
@@ -81,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\x64\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

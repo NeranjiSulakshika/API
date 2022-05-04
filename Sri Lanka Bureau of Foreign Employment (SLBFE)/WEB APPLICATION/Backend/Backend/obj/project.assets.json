@@ -11,6 +11,27 @@
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
         }
       },
+      "ExcelDataReader/3.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/ExcelDataReader.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/ExcelDataReader.dll": {}
+        }
+      },
+      "ExcelDataReader.DataSet/3.6.0": {
+        "type": "package",
+        "dependencies": {
+          "ExcelDataReader": "3.6.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/ExcelDataReader.DataSet.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/ExcelDataReader.DataSet.dll": {}
+        }
+      },
       "Google.Protobuf/3.19.4": {
         "type": "package",
         "compile": {
@@ -392,6 +413,49 @@
         "lib/netstandard2.0/BouncyCastle.Crypto.xml",
         "lib/xamarinios/BouncyCastle.Crypto.dll",
         "lib/xamarinios/BouncyCastle.Crypto.xml"
+      ]
+    },
+    "ExcelDataReader/3.6.0": {
+      "sha512": "eXyxTwG7EEWpgQX3juZ2KcndqTqm/ydx9GXS2lUiMJU54U4h5eXdygRtVgINv0t60ezPWEb+lL7uM7Q+wm5BBA==",
+      "type": "package",
+      "path": "exceldatareader/3.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "exceldatareader.3.6.0.nupkg.sha512",
+        "exceldatareader.nuspec",
+        "lib/net20/ExcelDataReader.dll",
+        "lib/net20/ExcelDataReader.pdb",
+        "lib/net20/ExcelDataReader.xml",
+        "lib/net45/ExcelDataReader.dll",
+        "lib/net45/ExcelDataReader.pdb",
+        "lib/net45/ExcelDataReader.xml",
+        "lib/netstandard1.3/ExcelDataReader.dll",
+        "lib/netstandard1.3/ExcelDataReader.pdb",
+        "lib/netstandard1.3/ExcelDataReader.xml",
+        "lib/netstandard2.0/ExcelDataReader.dll",
+        "lib/netstandard2.0/ExcelDataReader.pdb",
+        "lib/netstandard2.0/ExcelDataReader.xml"
+      ]
+    },
+    "ExcelDataReader.DataSet/3.6.0": {
+      "sha512": "miW3sWmPXnLM38YadRIfnhL4W4QZajpS6Q/OqsOpFJU5ct8h+M/fMpbGMm5INtsMP0Y1k0WK0stIfSW3RP31Xg==",
+      "type": "package",
+      "path": "exceldatareader.dataset/3.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "exceldatareader.dataset.3.6.0.nupkg.sha512",
+        "exceldatareader.dataset.nuspec",
+        "lib/net20/ExcelDataReader.DataSet.dll",
+        "lib/net20/ExcelDataReader.DataSet.pdb",
+        "lib/net20/ExcelDataReader.DataSet.xml",
+        "lib/net35/ExcelDataReader.DataSet.dll",
+        "lib/net35/ExcelDataReader.DataSet.pdb",
+        "lib/net35/ExcelDataReader.DataSet.xml",
+        "lib/netstandard2.0/ExcelDataReader.DataSet.dll",
+        "lib/netstandard2.0/ExcelDataReader.DataSet.pdb",
+        "lib/netstandard2.0/ExcelDataReader.DataSet.xml"
       ]
     },
     "Google.Protobuf/3.19.4": {
@@ -1120,6 +1184,8 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "ExcelDataReader >= 3.6.0",
+      "ExcelDataReader.DataSet >= 3.6.0",
       "MySql.Data >= 8.0.29",
       "MySqlConnector >= 2.1.8",
       "Newtonsoft.Json >= 13.0.1",
@@ -1128,19 +1194,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\EVIS\\.nuget\\packages\\": {}
+    "C:\\Users\\NERANJI SULAKSHIKA\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
+      "projectUniqueName": "C:\\Users\\NERANJI SULAKSHIKA\\Documents\\API\\Project\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
       "projectName": "Backend",
-      "projectPath": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
-      "packagesPath": "C:\\Users\\EVIS\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\EVIS\\Downloads\\API\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\obj\\",
+      "projectPath": "C:\\Users\\NERANJI SULAKSHIKA\\Documents\\API\\Project\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\Backend.csproj",
+      "packagesPath": "C:\\Users\\NERANJI SULAKSHIKA\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\NERANJI SULAKSHIKA\\Documents\\API\\Project\\API\\Sri Lanka Bureau of Foreign Employment (SLBFE)\\WEB APPLICATION\\Backend\\Backend\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\EVIS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\NERANJI SULAKSHIKA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1148,9 +1219,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://pkgs.dev.azure.com/e-vis/a73aec65-3042-4a88-a530-5e028604112e/_packaging/PermAssist_Feed/nuget/v3/index.json": {},
-        "https://www.myget.org/F/applicationinsights-sdk-labs/": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
@@ -1168,6 +1237,14 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "ExcelDataReader": {
+            "target": "Package",
+            "version": "[3.6.0, )"
+          },
+          "ExcelDataReader.DataSet": {
+            "target": "Package",
+            "version": "[3.6.0, )"
+          },
           "MySql.Data": {
             "target": "Package",
             "version": "[8.0.29, )"
@@ -1207,7 +1284,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\x64\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

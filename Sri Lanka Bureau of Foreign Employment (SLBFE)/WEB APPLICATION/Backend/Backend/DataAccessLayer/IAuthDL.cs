@@ -62,5 +62,10 @@ namespace Backend.DataAccessLayer
         /// Reply for Complaints 
         /// </summary>
         public Task<UpdateComplaintInformationResponse> UpdateComplaintInformationRequest(UpdateComplaintInformationRequest request);
+
+        /// <summary>
+        /// Upload Files
+        /// </summary>
+        public Task<UploadFilesResponse> UploadFiles(UploadFiles request, string path);
     }
 }

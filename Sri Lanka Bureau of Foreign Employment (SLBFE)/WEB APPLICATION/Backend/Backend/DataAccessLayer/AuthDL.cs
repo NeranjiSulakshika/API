@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MySqlConnector;
 using Microsoft.AspNetCore.Mvc;
+using ExcelDataReader;
+using System.Data;
 
 namespace Backend.DataAccessLayer
 {
@@ -19,7 +21,7 @@ namespace Backend.DataAccessLayer
         public AuthDL(IConfiguration configuration)
         {
             _configuration = configuration;
-            _mySqlConnection = new MySqlConnection(_configuration["ConnectionStrings:MySqlDBConnectionString"]);
+            _mySqlConnection = new MySqlConnection(_configuration[key: "ConnectionStrings:MySqlDBConnectionString"]);
         }
 
 
@@ -628,6 +630,89 @@ namespace Backend.DataAccessLayer
             }
 
             return resposne;
+        }
+
+
+        /// <summary>
+        /// Upload Files
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<UploadFilesResponse> UploadFiles(UploadFiles request, string path)
+        {
+            UploadFilesResponse response = new UploadFilesResponse();
+            List<ExcelBulkUploadParameter> parameter = new List<ExcelBulkUploadParameter>();
+
+            response.IsSuccess = true;
+            response.Message = "Successful";
+
+            try
+            {
+                if (request.File.FileName.ToLower().Contains(value: ".pdf"))
+                {
+                    FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                    IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream);
+                    DataSet dataset = reader.AsDataSet(
+                        configuration: new ExcelDataSetConfiguration()
+                        {
+                            UseColumnDataType = false,
+                            ConfigureDataTable = (IExcelDataReader tableReader) => new ExcelDataTableConfiguration()
+                            {
+                                UseHeaderRow = true
+                            }
+                        });
+
+                    for (int i = 0; i < dataset.Tables[index: 0].Rows.Count; i++)
+                    {
+                        ExcelBulkUploadParameter rows = new ExcelBulkUploadParameter();
+                        rows.Name = dataset.Tables[index: 0].Rows[i].ItemArray[0] != null ? Convert.ToString(dataset.Tables[index: 0].Rows[i].ItemArray[0]) : "-1";
+                        parameter.Add(rows);
+                    }
+
+                    stream.Close();
+
+                    if (parameter.Count > 0)
+                    {
+                        foreach (ExcelBulkUploadParameter rows in parameter )
+                        {
+                            string SqlQuery = @"INSERT INTO slbfe.user_details (Name) VALUES (@Name)";
+
+                            using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
+                            {
+                                sqlCommand.CommandType = System.Data.CommandType.Text;
+                                sqlCommand.CommandTimeout = 180;
+                                sqlCommand.Parameters.AddWithValue(parameterName: "@Name", rows.Name);
+                                int Status = await sqlCommand.ExecuteNonQueryAsync();
+                                if (Status <= 0)
+                                {
+                                    response.IsSuccess = false;
+                                    response.Message = "Query not executed";
+                                    return response;
+                                }
+                            }
+                        }
+                    }
+;                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Incorrect file";
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
+            }
+            finally
+            {
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
+            }
+
+            return response;
         }
     }
 }

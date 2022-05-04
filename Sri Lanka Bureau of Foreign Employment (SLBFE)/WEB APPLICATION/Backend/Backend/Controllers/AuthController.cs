@@ -235,6 +235,30 @@ namespace Backend.Controllers
             return filename;
         }
 
+        [HttpPost]
+        public async Task<ActionResult> UploadFiles([FromForm]UploadFiles request)
+        {
+            UploadFilesResponse response = new UploadFilesResponse();
+            string path = "Files/" + request.File.FileName;
+
+            try
+            {
+                using (FileStream stream = new FileStream(path, FileMode.CreateNew))
+                {
+                    await request.File.CopyToAsync(stream);
+                }
+
+                response = await _authDL.UploadFiles(request, path);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+
+            return Ok(response);
+        }
+
 
         /// <summary>
         /// Delete Citizen Account
