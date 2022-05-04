@@ -26,6 +26,7 @@ export default class SignUp extends Component {
       Email: '',
       Password: '',
       ConfirmPassword: '',
+      Qualification: '',
 
       NICFlag: false,
       NameFlag: false,
@@ -35,6 +36,7 @@ export default class SignUp extends Component {
       EmailFlag: false,
       PasswordFlag: false,
       ConfirmPasswordFlag: false,
+      QualificationFlag: false,
 
       open: false,
       Message: '',
@@ -60,6 +62,7 @@ export default class SignUp extends Component {
       EmailFlag: false,
       PasswordFlag: false,
       ConfirmPasswordFlag: false,
+      QualificationFlag: false,
     })
 
     if (this.state.NIC === '') {
@@ -86,6 +89,9 @@ export default class SignUp extends Component {
     if (this.state.ConfirmPassword === '') {
       this.setState({ ConfirmPasswordFlag: true })
     }
+    if (this.state.Qualification === '') {
+      this.setState({ QualificationFlag: true })
+    }
   }
 
   handleSubmit = (e) => {
@@ -98,18 +104,20 @@ export default class SignUp extends Component {
       this.state.Profession !== '' &&
       this.state.Email !== '' &&
       this.state.Password !== '' &&
-      this.state.ConfirmPassword !== ''
+      this.state.ConfirmPassword !== '' &&
+      this.state.Qualification !== ''
     ) {
       const data = {
-        NIC: this.state.NIC,
-        Name: this.state.Name,
-        Address: this.state.Address,
-        Age: this.state.Age,
-        Profession: this.state.Profession,
-        Email: this.state.Email,
+        nic: this.state.NIC,
+        name: this.state.Name,
+        address: this.state.Address,
+        age: this.state.Age,
+        profession: this.state.Profession,
+        email: this.state.Email,
         password: this.state.Password,
         configPassword: this.state.ConfirmPassword,
         affiliation: this.state.Radiovalue,
+        qualification: this.state.Qualification,
       }
 
       authServices
@@ -238,6 +246,16 @@ export default class SignUp extends Component {
                 size="small"
                 error={this.state.ConfirmPasswordFlag}
                 value={this.state.ConfirmPassword}
+                onChange={this.handleChange}
+              />
+              <TextField
+                className="TextField"
+                name="Qualification"
+                label="Qualification"
+                variant="outlined"
+                size="small"
+                error={this.state.QualificationFlag}
+                value={this.state.Qualification}
                 onChange={this.handleChange}
               />
               <RadioGroup
