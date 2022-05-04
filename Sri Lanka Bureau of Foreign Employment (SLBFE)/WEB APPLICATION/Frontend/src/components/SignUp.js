@@ -165,6 +165,9 @@ export default class SignUp extends Component {
           <div className="Header">Sign Up</div>
           <div className="Body">
             <form className="form">
+            <Button id="adminLogin" className="Btn" color="primary" onClick={this.handleSignIn}>
+              Admin
+            </Button>
               <TextField
                 className="TextField"
                 name="NIC"
