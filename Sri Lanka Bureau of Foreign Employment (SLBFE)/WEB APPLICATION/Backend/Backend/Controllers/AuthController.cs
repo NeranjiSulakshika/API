@@ -35,6 +35,7 @@ namespace Backend.Controllers
         public async Task<IActionResult> GetAdmin([FromHeader]GetAdmin request)
         {
             ReadAdminResponse response = null;
+
             try
             {
                 response = await _authDL.GetAdmin(request);
@@ -174,11 +175,11 @@ namespace Backend.Controllers
 
 
         /// <summary>
-        /// Update Citizen's BirthCertificate, CV, Passport & Qualifications
+        /// Update Citizen's Information
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AllowAnonymous]
+        /*[AllowAnonymous]
         [HttpPut]
         [Route("UpdateCitizen")]
         public async Task<IActionResult> UpdateCitizenInformation(UpdateCitizenInformationRequest request)
@@ -195,7 +196,7 @@ namespace Backend.Controllers
             }
 
             return Ok(response);
-        }
+        }*/
 
 
         /// <summary>
@@ -205,7 +206,7 @@ namespace Backend.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public async Task<string> UploadFile(IFormFile file)
+        public async Task<string> UploadCitizenDocuments(IFormFile file)
         {
             string filename = "";
 
@@ -233,30 +234,6 @@ namespace Backend.Controllers
             }
 
             return filename;
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> UploadFiles([FromForm]UploadFiles request)
-        {
-            UploadFilesResponse response = new UploadFilesResponse();
-            string path = "Files/" + request.File.FileName;
-
-            try
-            {
-                using (FileStream stream = new FileStream(path, FileMode.CreateNew))
-                {
-                    await request.File.CopyToAsync(stream);
-                }
-
-                response = await _authDL.UploadFiles(request, path);
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Message = ex.Message;
-            }
-
-            return Ok(response);
         }
 
 
@@ -341,7 +318,7 @@ namespace Backend.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPut]
-        [Route("ReplyComplaint")]
+        [Route("ReplyComplaint/{ComplaintId}")]
         public async Task<IActionResult> UpdateComplaintInformation(UpdateComplaintInformationRequest request)
         {
             UpdateComplaintInformationResponse response = null;

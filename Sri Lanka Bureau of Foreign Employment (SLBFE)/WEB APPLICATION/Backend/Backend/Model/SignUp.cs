@@ -17,6 +17,7 @@ namespace Backend.Model
         public string Password { get; set; }
         public string ConfigPassword { get; set; }
         public string Affiliation { get; set; }
+        public string Qualification { get; set; }
     }
 
     public class SignUpResponse

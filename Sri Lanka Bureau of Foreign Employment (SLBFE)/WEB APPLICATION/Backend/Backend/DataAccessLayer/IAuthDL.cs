@@ -41,7 +41,7 @@ namespace Backend.DataAccessLayer
         /// <summary>
         /// Update Citizen Information
         /// </summary>
-        public Task<UpdateCitizenInformationResponse> UpdateCitizenInformationRequest(UpdateCitizenInformationRequest request);
+        //public Task<UpdateCitizenInformationResponse> UpdateCitizenInformationRequest(UpdateCitizenInformationRequest request);
 
         /// <summary>
         /// Delete Citizen Account
@@ -62,10 +62,5 @@ namespace Backend.DataAccessLayer
         /// Reply for Complaints 
         /// </summary>
         public Task<UpdateComplaintInformationResponse> UpdateComplaintInformationRequest(UpdateComplaintInformationRequest request);
-
-        /// <summary>
-        /// Upload Files
-        /// </summary>
-        public Task<UploadFilesResponse> UploadFiles(UploadFiles request, string path);
     }
 }

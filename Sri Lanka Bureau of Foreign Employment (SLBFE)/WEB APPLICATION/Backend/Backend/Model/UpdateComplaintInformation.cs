@@ -8,7 +8,6 @@ namespace Backend.Model
     public class UpdateComplaintInformationRequest
     {
         public int ComplaintId { get; set; }
-        public string? Complaint { get; set; }
         public string Reply { get; set; }
     }
 

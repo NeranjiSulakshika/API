@@ -31,7 +31,7 @@ namespace Backend.ServiceLayer
         /// <summary>
         /// Update Citizen Information
         /// </summary>
-        public Task<UpdateCitizenInformationResponse> UpdateCitizenInformation(UpdateCitizenInformationRequest request);
+        //public Task<UpdateCitizenInformationResponse> UpdateCitizenInformation(UpdateCitizenInformationRequest request);
 
         /// <summary>
         /// Delete Citizen Account

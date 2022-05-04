@@ -50,10 +50,10 @@ namespace Backend.ServiceLayer
         /// <summary>
         /// Update Citizen Information
         /// </summary>
-        public async Task<UpdateCitizenInformationResponse> UpdateCitizenInformation(UpdateCitizenInformationRequest request)
+        /*public async Task<UpdateCitizenInformationResponse> UpdateCitizenInformation(UpdateCitizenInformationRequest request)
         {
             return await _appliactionRL.UpdateCitizenInformationRequest(request);
-        }
+        }*/
 
         /// <summary>
         /// Delete Citizen Account

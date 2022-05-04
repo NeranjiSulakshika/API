@@ -16,6 +16,6 @@ namespace Backend.Model
     {
         public int ComplaintId { get; set; }
         public string? Complaint { get; set; }
-        public string Reply { get; set; }
+        public string? Reply { get; set; }
     }
 }

@@ -7,8 +7,7 @@ namespace Backend.Model
 {
     public class CreateComplaintRequest
     {
-        public string? Complaint { get; set; }
-        public string Reply { get; set; }
+        public string Complaint { get; set; }
     }
 
     public class CreateComplaintResponse

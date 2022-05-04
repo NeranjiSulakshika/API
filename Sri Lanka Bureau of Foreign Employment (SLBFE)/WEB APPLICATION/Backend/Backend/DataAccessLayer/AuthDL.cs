@@ -9,6 +9,7 @@ using MySqlConnector;
 using Microsoft.AspNetCore.Mvc;
 using ExcelDataReader;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Backend.DataAccessLayer
 {
@@ -16,6 +17,8 @@ namespace Backend.DataAccessLayer
     {
         public readonly IConfiguration _configuration;
         public readonly MySqlConnection _mySqlConnection;
+        public readonly string EmailRegex = @"^[0-9a-zA-Z]+([._+-][0-9a-zA-Z]+)*@[0-9a-zA-Z]+.[a-zA-Z]{2,4}([.][a-zA-Z]{2,3})?$";
+
         int ConnectionTimeOut = 180;
 
         public AuthDL(IConfiguration configuration)
@@ -34,6 +37,7 @@ namespace Backend.DataAccessLayer
         {
             ReadAdminResponse response = new ReadAdminResponse();
             response.readAdmin = new List<GetAdmin>();
+
             response.IsSuccess = true;
             response.Message = "Successful";
 
@@ -44,16 +48,23 @@ namespace Backend.DataAccessLayer
                     await _mySqlConnection.OpenAsync();
                 }
 
+                //Check Null Or Empty
+                if (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password))
+                {
+                    response.Message = "Usename Or Password cannot Null or Empty";
+                }
+
+                //SQL Query
                 string SqlQuery = @"SELECT * 
                                     FROM slbfe.admin 
-                                    WHERE UserName=@UserName AND Password=@PassWord;";
+                                    WHERE UserName=@UserName AND Password=@Password;";
 
                 using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                 {
                     sqlCommand.CommandType = System.Data.CommandType.Text;
                     sqlCommand.CommandTimeout = 180;
                     sqlCommand.Parameters.AddWithValue("@UserName", request.UserName);
-                    sqlCommand.Parameters.AddWithValue("@PassWord", request.Password);
+                    sqlCommand.Parameters.AddWithValue("@Password", request.Password);
 
                     using (DbDataReader dataReader = await sqlCommand.ExecuteReaderAsync())
                     {
@@ -77,7 +88,8 @@ namespace Backend.DataAccessLayer
             }
             finally
             {
-
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
             }
 
             return response;
@@ -92,27 +104,44 @@ namespace Backend.DataAccessLayer
         public async Task<SignInResponse> SignIn(SignInRequest request)
         {
             SignInResponse response = new SignInResponse();
+
             response.IsSuccess = true;
             response.Message = "Successful";
+
             try
             {
-
                 if(_mySqlConnection.State != System.Data.ConnectionState.Open)
                 {
                     await _mySqlConnection.OpenAsync();
                 }
 
+                //Check Null Or Empty
+                if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password) || string.IsNullOrEmpty(request.Affiliation))
+                {
+                    response.Message = "Usename Or Password Or Affiliation cannot Null or Empty";
+                }
+
+                //Email Validation
+                if (!(Regex.IsMatch(request.Email, EmailRegex)))
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Email is not correct format!";
+                    return response;
+                }
+
+                //SQL Query
                 string SqlQuery = @"SELECT * 
                                     FROM slbfe.user_details 
-                                    WHERE Email=@Email AND Password=@PassWord AND Affiliation=@Affiliation;";
+                                    WHERE Email=@Email AND Password=@Password AND Affiliation=@Affiliation;";
 
                 using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                 {
                     sqlCommand.CommandType = System.Data.CommandType.Text;
                     sqlCommand.CommandTimeout = 180;
                     sqlCommand.Parameters.AddWithValue("@Email", request.Email);
-                    sqlCommand.Parameters.AddWithValue("@PassWord", request.Password);
+                    sqlCommand.Parameters.AddWithValue("@Password", request.Password);
                     sqlCommand.Parameters.AddWithValue("@Affiliation", request.Affiliation);
+
                     using (DbDataReader dataReader = await sqlCommand.ExecuteReaderAsync())
                     {
                         if (dataReader.HasRows)
@@ -127,7 +156,6 @@ namespace Backend.DataAccessLayer
                         }
                     }
                 }
-
             }
             catch(Exception ex)
             {
@@ -136,7 +164,8 @@ namespace Backend.DataAccessLayer
             }
             finally
             {
-
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
             }
 
             return response;
@@ -151,8 +180,10 @@ namespace Backend.DataAccessLayer
         public async Task<SignUpResponse> SignUp(SignUpRequest request)
         {
             SignUpResponse response = new SignUpResponse();
+
             response.IsSuccess = true;
             response.Message = "Successful";
+
             try
             {
                 if (_mySqlConnection.State != System.Data.ConnectionState.Open)
@@ -160,6 +191,7 @@ namespace Backend.DataAccessLayer
                     await _mySqlConnection.OpenAsync();
                 }
 
+                //Password Validation
                 if (!request.Password.Equals(request.ConfigPassword))
                 {
                     response.IsSuccess = false;
@@ -167,10 +199,19 @@ namespace Backend.DataAccessLayer
                     return response;
                 }
 
+                //Email Validation
+                if (!(Regex.IsMatch(request.Email, EmailRegex)))
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Email is not correct format";
+                    return response;
+                }
+
+                //SQL Query
                 string SqlQuery = @"INSERT INTO 
                                     slbfe.user_details 
-                                    (NIC, Name, Address, Age, Profession, Email, PassWord, Affiliation) VALUES 
-                                    (@NIC, @Name, @Address, @Age, @Profession, @Email, @PassWord, @Affiliation)";
+                                    (NIC, Name, Address, Age, Profession, Email, Password, Affiliation, Qualification) VALUES 
+                                    (@NIC, @Name, @Address, @Age, @Profession, @Email, @Password, @Affiliation, @Qualification)";
 
                 using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                 {
@@ -182,9 +223,11 @@ namespace Backend.DataAccessLayer
                     sqlCommand.Parameters.AddWithValue("@Age", request.Age);
                     sqlCommand.Parameters.AddWithValue("@Profession", request.Profession);
                     sqlCommand.Parameters.AddWithValue("@Email", request.Email);
-                    sqlCommand.Parameters.AddWithValue("@PassWord", request.Password);
+                    sqlCommand.Parameters.AddWithValue("@Password", request.Password);
                     sqlCommand.Parameters.AddWithValue("@Affiliation", request.Affiliation);
+                    sqlCommand.Parameters.AddWithValue("@Qualification", request.Qualification);
                     int Status = await sqlCommand.ExecuteNonQueryAsync();
+
                     if(Status <= 0)
                     {
                         response.IsSuccess = false;
@@ -200,7 +243,8 @@ namespace Backend.DataAccessLayer
             }
             finally
             {
-
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
             }
 
             return response;
@@ -215,15 +259,19 @@ namespace Backend.DataAccessLayer
         {
             ReadCitizenInformationResponse response = new ReadCitizenInformationResponse();
             response.readCitizenInformation = new List<ReadCitizenInformation>();
+
             response.IsSuccess = true;
             response.Message = "Successful";
+
             try
             {
+                //SQL Query
                 string SqlQuery = @"SELECT * FROM slbfe.user_details ";
 
                 using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                 {
                     await _mySqlConnection.OpenAsync();
+
                     using (DbDataReader _sqlDataReader = await sqlCommand.ExecuteReaderAsync())
                     {
                         if (_sqlDataReader.HasRows)
@@ -281,11 +329,20 @@ namespace Backend.DataAccessLayer
         public async Task<CitizenInformationByNICResponse> GetCitizenInformationByNIC(CitizenInformationByNICRequest request)
         {
             CitizenInformationByNICResponse response = new CitizenInformationByNICResponse();
+
             response.IsSuccess = true;
             response.Message = "Successful";
+
             try
             {
+                //SQL Query
                 string SqlQuery = @"SELECT * FROM slbfe.user_details WHERE NIC = @NIC AND Affiliation = 'Citizen'";
+
+                //Check Null Or Empty
+                if (string.IsNullOrEmpty(request.NIC))
+                {
+                    response.Message = "NIC cannot Null or Empty";
+                }
 
                 using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                 {
@@ -293,6 +350,7 @@ namespace Backend.DataAccessLayer
                     sqlCommand.CommandTimeout = ConnectionTimeOut;
                     sqlCommand.Parameters.AddWithValue("@NIC", request.NIC);
                     await _mySqlConnection.OpenAsync();
+
                     using (DbDataReader _sqlDataReader = await sqlCommand.ExecuteReaderAsync())
                     {
                         if (_sqlDataReader.HasRows)
@@ -336,11 +394,20 @@ namespace Backend.DataAccessLayer
         public async Task<CitizenInformationByQualificationResponse> GetCitizenInformationByQualification(CitizenInformationByQualificationRequest request)
         {
             CitizenInformationByQualificationResponse response = new CitizenInformationByQualificationResponse();
+
             response.IsSuccess = true;
             response.Message = "Successful";
+
             try
             {
+                //SQL Query
                 string SqlQuery = @"SELECT * FROM slbfe.user_details WHERE Qualification = @Qualification AND Affiliation = 'Citizen'";
+
+                //Check Null Or Empty
+                if (string.IsNullOrEmpty(request.Qualification))
+                {
+                    response.Message = "Qualification cannot Null or Empty";
+                }
 
                 using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                 {
@@ -348,6 +415,7 @@ namespace Backend.DataAccessLayer
                     sqlCommand.CommandTimeout = ConnectionTimeOut;
                     sqlCommand.Parameters.AddWithValue("@Qualification", request.Qualification);
                     await _mySqlConnection.OpenAsync();
+
                     using (DbDataReader _sqlDataReader = await sqlCommand.ExecuteReaderAsync())
                     {
                         if (_sqlDataReader.HasRows)
@@ -363,7 +431,7 @@ namespace Backend.DataAccessLayer
                         }
                         else
                         {
-                            response.Message = "No Citizen Found";
+                            response.Message = "No Qualification Found";
                         }
                     }
                 }
@@ -388,15 +456,18 @@ namespace Backend.DataAccessLayer
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<UpdateCitizenInformationResponse> UpdateCitizenInformationRequest(UpdateCitizenInformationRequest request)
+        /*public async Task<UpdateCitizenInformationResponse> UpdateCitizenInformationRequest(UpdateCitizenInformationRequest request)
         {
-            UpdateCitizenInformationResponse resposne = new UpdateCitizenInformationResponse();
-            resposne.IsSuccess = true;
-            resposne.Message = "Successful";
+            UpdateCitizenInformationResponse response = new UpdateCitizenInformationResponse();
+
+            response.IsSuccess = true;
+            response.Message = "Successful";
+
             try
             {
                 if (_mySqlConnection != null)
                 {
+                    //SQL Query
                     string SqlQuery = @"UPDATE slbfe.user_details SET Qualification=@Qualification where UserId=@UserId ";
 
                     using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
@@ -407,10 +478,11 @@ namespace Backend.DataAccessLayer
                         sqlCommand.Parameters.AddWithValue("@Qualification", request.Qualification);
                         await _mySqlConnection.OpenAsync();
                         int Status = await sqlCommand.ExecuteNonQueryAsync();
+
                         if (Status <= 0)
                         {
-                            resposne.IsSuccess = false;
-                            resposne.Message = "Informations Not Update";
+                            response.IsSuccess = false;
+                            response.Message = "Informations Not Update";
                         }
                     }
                 }
@@ -418,8 +490,8 @@ namespace Backend.DataAccessLayer
             }
             catch (Exception ex)
             {
-                resposne.IsSuccess = false;
-                resposne.Message = "Exception Message : " + ex.Message;
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
             }
             finally
             {
@@ -427,8 +499,8 @@ namespace Backend.DataAccessLayer
                 await _mySqlConnection.DisposeAsync();
             }
 
-            return resposne;
-        }
+            return response;
+        }*/
 
 
         /// <summary>
@@ -438,14 +510,17 @@ namespace Backend.DataAccessLayer
         /// <returns></returns>
         public async Task<DeleteCitizenResponse> DeleteCitizen(DeleteCitizenRequest request)
         {
-            DeleteCitizenResponse resposne = new DeleteCitizenResponse();
-            resposne.IsSuccess = true;
-            resposne.Message = "Successful";
+            DeleteCitizenResponse response = new DeleteCitizenResponse();
+
+            response.IsSuccess = true;
+            response.Message = "Successful";
+
             try
             {
                 if (_mySqlConnection != null)
                 {
-                    string SqlQuery = @"DELETE FROM slbfe.user_details WHERE UserId = @UserId";
+                    //SQL Query
+                    string SqlQuery = @"DELETE FROM slbfe.user_details WHERE UserId = @UserId AND Affiliation = 'Citizen'";
 
                     using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                     {
@@ -454,19 +529,19 @@ namespace Backend.DataAccessLayer
                         sqlCommand.Parameters.AddWithValue("?UserId", request.UserId);
                         await _mySqlConnection.OpenAsync();
                         int Status = await sqlCommand.ExecuteNonQueryAsync();
+
                         if (Status <= 0)
                         {
-                            resposne.IsSuccess = false;
-                            resposne.Message = "UnSuccessful";
+                            response.IsSuccess = false;
+                            response.Message = "Please check the provided information carefully";
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
-                resposne.IsSuccess = false;
-                resposne.Message = "Exception Message : " + ex.Message;
+                response.IsSuccess = false;
+                response.Message = "Exception Message : " + ex.Message;
             }
             finally
             {
@@ -474,7 +549,7 @@ namespace Backend.DataAccessLayer
                 await _mySqlConnection.DisposeAsync();
             }
 
-            return resposne;
+            return response;
         }
 
 
@@ -486,15 +561,19 @@ namespace Backend.DataAccessLayer
         {
             ReadComplaintsResponse response = new ReadComplaintsResponse();
             response.readComplaints = new List<ReadComplaints>();
+
             response.IsSuccess = true;
             response.Message = "Successful";
+
             try
             {
+                //SQL Query
                 string SqlQuery = @"SELECT * FROM slbfe.complaints ";
 
                 using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                 {
                     await _mySqlConnection.OpenAsync();
+
                     using (DbDataReader _sqlDataReader = await sqlCommand.ExecuteReaderAsync())
                     {
                         if (_sqlDataReader.HasRows)
@@ -542,8 +621,10 @@ namespace Backend.DataAccessLayer
         public async Task<CreateComplaintResponse> CreateComplaintInformation(CreateComplaintRequest request)
         {
             CreateComplaintResponse response = new CreateComplaintResponse();
+
             response.IsSuccess = true;
             response.Message = "Successful";
+
             try
             {
                 if (_mySqlConnection.State != System.Data.ConnectionState.Open)
@@ -551,18 +632,16 @@ namespace Backend.DataAccessLayer
                     await _mySqlConnection.OpenAsync();
                 }
 
-                string SqlQuery = @"INSERT INTO 
-                                    slbfe.complaints 
-                                    (Complaint, Reply) VALUES 
-                                    (@Complaint, @Reply)";
+                //SQL Query
+                string SqlQuery = @"INSERT INTO slbfe.complaints (Complaint) VALUES (@Complaint)";
 
                 using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                 {
                     sqlCommand.CommandType = System.Data.CommandType.Text;
                     sqlCommand.CommandTimeout = 180;
                     sqlCommand.Parameters.AddWithValue("@Complaint", request.Complaint);
-                    sqlCommand.Parameters.AddWithValue("@Reply", request.Reply);
                     int Status = await sqlCommand.ExecuteNonQueryAsync();
+
                     if (Status <= 0)
                     {
                         response.IsSuccess = false;
@@ -578,7 +657,8 @@ namespace Backend.DataAccessLayer
             }
             finally
             {
-
+                await _mySqlConnection.CloseAsync();
+                await _mySqlConnection.DisposeAsync();
             }
 
             return response;
@@ -592,113 +672,33 @@ namespace Backend.DataAccessLayer
         /// <returns></returns>
         public async Task<UpdateComplaintInformationResponse> UpdateComplaintInformationRequest(UpdateComplaintInformationRequest request)
         {
-            UpdateComplaintInformationResponse resposne = new UpdateComplaintInformationResponse();
-            resposne.IsSuccess = true;
-            resposne.Message = "Successful";
-            try
-            {
-                if (_mySqlConnection != null)
-                {
-                    string SqlQuery = @"UPDATE slbfe.complaints SET Complaint= @Complaint , Reply=@Reply where ComplaintId=@ComplaintId ";
-
-                    using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
-                    {
-                        sqlCommand.CommandType = System.Data.CommandType.Text;
-                        sqlCommand.CommandTimeout = ConnectionTimeOut;
-                        sqlCommand.Parameters.AddWithValue("@ComplaintId", request.ComplaintId);
-                        sqlCommand.Parameters.AddWithValue("@Complaint", request.Complaint);
-                        sqlCommand.Parameters.AddWithValue("@Reply", request.Reply);
-                        await _mySqlConnection.OpenAsync();
-                        int Status = await sqlCommand.ExecuteNonQueryAsync();
-                        if (Status <= 0)
-                        {
-                            resposne.IsSuccess = false;
-                            resposne.Message = "Information Not Update";
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                resposne.IsSuccess = false;
-                resposne.Message = "Exception Message : " + ex.Message;
-            }
-            finally
-            {
-                await _mySqlConnection.CloseAsync();
-                await _mySqlConnection.DisposeAsync();
-            }
-
-            return resposne;
-        }
-
-
-        /// <summary>
-        /// Upload Files
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public async Task<UploadFilesResponse> UploadFiles(UploadFiles request, string path)
-        {
-            UploadFilesResponse response = new UploadFilesResponse();
-            List<ExcelBulkUploadParameter> parameter = new List<ExcelBulkUploadParameter>();
+            UpdateComplaintInformationResponse response = new UpdateComplaintInformationResponse();
 
             response.IsSuccess = true;
             response.Message = "Successful";
 
             try
             {
-                if (request.File.FileName.ToLower().Contains(value: ".pdf"))
+                if (_mySqlConnection != null)
                 {
-                    FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-                    IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream);
-                    DataSet dataset = reader.AsDataSet(
-                        configuration: new ExcelDataSetConfiguration()
-                        {
-                            UseColumnDataType = false,
-                            ConfigureDataTable = (IExcelDataReader tableReader) => new ExcelDataTableConfiguration()
-                            {
-                                UseHeaderRow = true
-                            }
-                        });
+                    //SQL Query
+                    string SqlQuery = @"UPDATE slbfe.complaints SET Reply=@Reply where ComplaintId=@ComplaintId ";
 
-                    for (int i = 0; i < dataset.Tables[index: 0].Rows.Count; i++)
+                    using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                     {
-                        ExcelBulkUploadParameter rows = new ExcelBulkUploadParameter();
-                        rows.Name = dataset.Tables[index: 0].Rows[i].ItemArray[0] != null ? Convert.ToString(dataset.Tables[index: 0].Rows[i].ItemArray[0]) : "-1";
-                        parameter.Add(rows);
-                    }
+                        sqlCommand.CommandType = System.Data.CommandType.Text;
+                        sqlCommand.CommandTimeout = ConnectionTimeOut;
+                        sqlCommand.Parameters.AddWithValue("@ComplaintId", request.ComplaintId);
+                        sqlCommand.Parameters.AddWithValue("@Reply", request.Reply);
+                        await _mySqlConnection.OpenAsync();
+                        int Status = await sqlCommand.ExecuteNonQueryAsync();
 
-                    stream.Close();
-
-                    if (parameter.Count > 0)
-                    {
-                        foreach (ExcelBulkUploadParameter rows in parameter )
+                        if (Status <= 0)
                         {
-                            string SqlQuery = @"INSERT INTO slbfe.user_details (Name) VALUES (@Name)";
-
-                            using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
-                            {
-                                sqlCommand.CommandType = System.Data.CommandType.Text;
-                                sqlCommand.CommandTimeout = 180;
-                                sqlCommand.Parameters.AddWithValue(parameterName: "@Name", rows.Name);
-                                int Status = await sqlCommand.ExecuteNonQueryAsync();
-                                if (Status <= 0)
-                                {
-                                    response.IsSuccess = false;
-                                    response.Message = "Query not executed";
-                                    return response;
-                                }
-                            }
+                            response.IsSuccess = false;
+                            response.Message = "Information Not Update";
                         }
                     }
-;                }
-                else
-                {
-                    response.IsSuccess = false;
-                    response.Message = "Incorrect file";
-                    return response;
                 }
             }
             catch (Exception ex)
