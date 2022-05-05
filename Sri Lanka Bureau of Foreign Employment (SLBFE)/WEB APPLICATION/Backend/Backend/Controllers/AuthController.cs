@@ -244,8 +244,9 @@ namespace Backend.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpDelete]
-        [Route("DeleteCitizen/{UserId}")]
-        public async Task<IActionResult> DeleteCitizen([FromHeader] DeleteCitizenRequest request)
+        //[Route("DeleteCitizen/{UserId}")]
+        [Route(template: "DeleteCitizen")]
+        public async Task<IActionResult> DeleteCitizen(DeleteCitizenRequest request)
         {
             DeleteCitizenResponse response = null;
             try

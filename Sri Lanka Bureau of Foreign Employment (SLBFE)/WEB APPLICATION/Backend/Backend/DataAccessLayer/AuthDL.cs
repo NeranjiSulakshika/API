@@ -266,7 +266,7 @@ namespace Backend.DataAccessLayer
             try
             {
                 //SQL Query
-                string SqlQuery = @"SELECT * FROM slbfe.user_details ";
+                string SqlQuery = @"SELECT * FROM slbfe.user_details WHERE Affiliation = 'Citizen' ";
 
                 using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                 {
@@ -294,7 +294,7 @@ namespace Backend.DataAccessLayer
 
                                 getResponse.Email = _sqlDataReader["Email"] != DBNull.Value ? _sqlDataReader["Email"].ToString() : string.Empty;
 
-                                getResponse.Affiliation = _sqlDataReader["Affiliation"] != DBNull.Value ? _sqlDataReader["Affiliation"].ToString() : string.Empty;
+                                getResponse.Qualification = _sqlDataReader["Qualification"] != DBNull.Value ? _sqlDataReader["Qualification"].ToString() : string.Empty;
 
                                 response.readCitizenInformation.Add(getResponse);
                             }

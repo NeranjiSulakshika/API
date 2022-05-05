@@ -64,10 +64,10 @@ export default class AdminSignIn extends Component {
       }
       authServices
         .AdminSignIn(data)
-        .then((data) => {debugger
+        .then((data) => {
           console.log('Data : ', data)
           if (data.data.isSuccess) {
-            this.props.history.push('/HomePage')
+            this.props.history.push('/AdminHomePage')
           } else {
             console.log('Something Went Wrong')
             this.setState({ open: true, Message: 'LogIn Failed' })
