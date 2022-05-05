@@ -11,4 +11,8 @@ export default class AuthServices {
   SignIn(data) {
     return axiosServices.post(Configurations.SignIn, data, false)
   }
+
+  AdminSignIn(data) {
+    return axiosServices.post(Configurations.AdminSignIn, data, false)
+  }
 }

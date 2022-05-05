@@ -157,6 +157,10 @@ export default class SignUp extends Component {
     this.props.history.push('/SignIn')
   }
 
+  handleAdminSignIn = (e) => {
+    this.props.history.push('/AdminSignIn')
+  }
+
   render() {
     console.log('state : ', this.state)
     return (
@@ -165,7 +169,7 @@ export default class SignUp extends Component {
           <div className="Header">Sign Up</div>
           <div className="Body">
             <form className="form">
-            <Button id="adminLogin" className="Btn" color="primary" onClick={this.handleSignIn}>
+            <Button id="adminLogin" className="Btn" color="primary" onClick={this.handleAdminSignIn}>
               Admin
             </Button>
               <TextField

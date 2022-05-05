@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import AuthServices from '../services/AuthServices'
 import './SignUp.scss'
 import TextField from '@material-ui/core/TextField'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Button from '@material-ui/core/Button'
 import Snackbar from '@material-ui/core/Snackbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -12,13 +9,12 @@ import CloseIcon from '@material-ui/icons/Close'
 
 const authServices = new AuthServices()
 
-export default class SignIn extends Component {
+export default class AdminSignIn extends Component {
   constructor() {
     super()
     this.state = {
-      Radiovalue: 'Citizen',
-      Email: '',
-      EmailFlag: false,
+      UserName: '',
+      UserNameFlag: false,
       Password: '',
       PasswordFlag: false,
       open: false,
@@ -33,10 +29,6 @@ export default class SignIn extends Component {
     this.setState({ open: false })
   }
 
-  handleRadioChange = (e) => {
-    this.setState({ Radiovalue: e.target.value })
-  }
-
   handleChange = (e) => {
     const { name, value } = e.target
     this.setState(
@@ -45,21 +37,17 @@ export default class SignIn extends Component {
     )
   }
 
-  handleSignUp = (e) => {
-    this.props.history.push('/')
-  }
-
-  handleAdminSignIn = (e) => {
-    this.props.history.push('/AdminSignIn')
+  handleSignIn = (e) => {
+    this.props.history.push('/SignIn')
   }
 
   CheckValidation() {
     console.log('CheckValidation Calling...')
 
-    this.setState({ EmailFlag: false, PasswordFlag: false })
+    this.setState({ UserNameFlag: false, PasswordFlag: false })
 
-    if (this.state.Email === '') {
-      this.setState({ EmailFlag: true })
+    if (this.state.UserName === '') {
+      this.setState({ UserNameFlag: true })
     }
     if (this.state.Password === '') {
       this.setState({ PasswordFlag: true })
@@ -68,16 +56,15 @@ export default class SignIn extends Component {
 
   handleSubmit = (e) => {
     this.CheckValidation()
-    if (this.state.Email !== '' && this.state.Password !== '') {
+    if (this.state.UserName !== '' && this.state.Password !== '') {
       console.log('Acceptable')
       let data = {
-        email: this.state.Email,
+        username: this.state.UserName,
         password: this.state.Password,
-        affiliation: this.state.Radiovalue,
       }
       authServices
-        .SignIn(data)
-        .then((data) => {
+        .AdminSignIn(data)
+        .then((data) => {debugger
           console.log('Data : ', data)
           if (data.data.isSuccess) {
             this.props.history.push('/HomePage')
@@ -101,21 +88,17 @@ export default class SignIn extends Component {
     return (
       <div className="SignUp-Container">
         <div className="SignUp-SubContainer">
-          <div className="Header">Sign In</div>
+          <div className="Header">Admin Sign In</div>
           <div className="Body">
             <form className="form">
-            <Button id="adminLogin" className="Btn" color="primary" onClick={this.handleAdminSignIn}>
-              Admin
-            </Button>
-
               <TextField
                 className="TextField"
-                name="Email"
-                label="Email"
+                name="UserName"
+                label="UserName"
                 variant="outlined"
                 size="small"
-                error={this.state.EmailFlag}
-                value={this.state.Email}
+                error={this.state.UserNameFlag}
+                value={this.state.UserName}
                 onChange={this.handleChange}
               />
               <TextField
@@ -129,30 +112,11 @@ export default class SignIn extends Component {
                 value={this.state.Password}
                 onChange={this.handleChange}
               />
-              <RadioGroup
-                className="Affiliations"
-                name="Affiliation"
-                value={this.state.Radiovalue}
-                onChange={this.handleRadioChange}
-              >
-                <FormControlLabel
-                  className="AffiliationValue"
-                  value="Officer"
-                  control={<Radio />}
-                  label="Officer"
-                />
-                <FormControlLabel
-                  className="AffiliationValue"
-                  value="Citizen"
-                  control={<Radio />}
-                  label="Citizen"
-                />
-              </RadioGroup>
             </form>
           </div>
           <div className="Buttons" style={{ alignItems: 'flex-start' }}>
-            <Button className="Btn" color="primary" onClick={this.handleSignUp}>
-              Sign Up
+            <Button className="Btn" color="primary" onClick={this.handleSignIn}>
+              User Sign In
             </Button>
             <Button
               className="Btn"
@@ -160,7 +124,7 @@ export default class SignIn extends Component {
               color="primary"
               onClick={this.handleSubmit}
             >
-              Sign In
+              Admin Sign In
             </Button>
           </div>
         </div>
