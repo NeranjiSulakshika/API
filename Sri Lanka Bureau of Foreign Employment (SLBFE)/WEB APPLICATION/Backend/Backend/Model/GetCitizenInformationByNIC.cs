@@ -24,5 +24,6 @@ namespace Backend.Model
         public int? Age { get; set; }
         public string? Profession { get; set; }
         public string? Email { get; set; }
+        public string? Qualification { get; set; }
     }
 }

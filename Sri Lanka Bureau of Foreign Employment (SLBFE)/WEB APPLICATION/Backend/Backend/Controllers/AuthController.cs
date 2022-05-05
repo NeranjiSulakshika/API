@@ -30,9 +30,9 @@ namespace Backend.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet]
-        [Route("Get/{UserName}, {Password}")]
-        public async Task<IActionResult> GetAdmin([FromHeader]GetAdmin request)
+        [HttpPost]
+        //[Route("Get")]
+        public async Task<IActionResult> GetAdmin([FromBody]GetAdmin request)
         {
             ReadAdminResponse response = null;
 
@@ -58,7 +58,7 @@ namespace Backend.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("Create")]
-        public async Task<ActionResult> SignUp(SignUpRequest request)
+        public async Task<ActionResult> SignUp([FromBody] SignUpRequest request)
         {
             SignUpResponse response = new SignUpResponse();
             try
@@ -81,9 +81,9 @@ namespace Backend.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet]
-        [Route("Get/{Email}/{Password}/{Affiliation}")]
-        public async Task<ActionResult> SignIn([FromHeader] SignInRequest request)
+        [HttpPost]
+        //[Route("Get/{Email}/{Password}/{Affiliation}")]
+        public async Task<ActionResult> SignIn([FromBody] SignInRequest request)
         {
             SignInResponse response = new SignInResponse();
             try
@@ -106,7 +106,7 @@ namespace Backend.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
-        [Route("GetCitizenList")]
+        //[Route("GetCitizenList")]
         public async Task<IActionResult> ReadCitizenInformation()
         {
             ReadCitizenInformationResponse response = null;
@@ -132,7 +132,7 @@ namespace Backend.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("GetCitizenInformationByNIC/{NIC}")]
-        public async Task<IActionResult> CitizenInformationByNIC([FromHeader]CitizenInformationByNICRequest request)
+        public async Task<IActionResult> CitizenInformationByNIC([FromHeader] CitizenInformationByNICRequest request)
         {
             CitizenInformationByNICResponse response = null;
             try
@@ -245,7 +245,7 @@ namespace Backend.Controllers
         [AllowAnonymous]
         [HttpDelete]
         [Route("DeleteCitizen/{UserId}")]
-        public async Task<IActionResult> DeleteCitizen([FromHeader]DeleteCitizenRequest request)
+        public async Task<IActionResult> DeleteCitizen([FromHeader] DeleteCitizenRequest request)
         {
             DeleteCitizenResponse response = null;
             try
@@ -268,7 +268,7 @@ namespace Backend.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
-        [Route("GetComplaintsList")]
+        //[Route("GetComplaintsList")]
         public async Task<IActionResult> ReadComplaints()
         {
             ReadComplaintsResponse response = null;
@@ -293,8 +293,8 @@ namespace Backend.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        [Route("CreateComplaint")]
-        public async Task<ActionResult> CreateComplaint(CreateComplaintRequest request)
+        //[Route("CreateComplaint")]
+        public async Task<ActionResult> CreateComplaint([FromBody] CreateComplaintRequest request)
         {
             CreateComplaintResponse response = new CreateComplaintResponse();
             try
@@ -318,8 +318,8 @@ namespace Backend.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPut]
-        [Route("ReplyComplaint/{ComplaintId}")]
-        public async Task<IActionResult> UpdateComplaintInformation(UpdateComplaintInformationRequest request)
+        //[Route("ReplyComplaint/{ComplaintId}")]
+        public async Task<IActionResult> UpdateComplaintInformation([FromBody] UpdateComplaintInformationRequest request)
         {
             UpdateComplaintInformationResponse response = null;
             try

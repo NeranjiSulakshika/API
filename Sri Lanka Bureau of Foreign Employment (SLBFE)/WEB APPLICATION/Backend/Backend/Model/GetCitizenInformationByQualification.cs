@@ -14,11 +14,12 @@ namespace Backend.Model
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
-        public GetCitizenInformationByQualification getCitizenInformationByQualification { get; set; }
+        public List<GetCitizenInformationByQualification> getCitizenInformationByQualification { get; set; }
     }
 
     public class GetCitizenInformationByQualification
     {
+        public string? NIC { get; set; }
         public string? Name { get; set; }
         public string? Address { get; set; }
         public int? Age { get; set; }

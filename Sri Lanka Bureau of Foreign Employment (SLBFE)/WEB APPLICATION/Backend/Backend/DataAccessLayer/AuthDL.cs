@@ -363,6 +363,7 @@ namespace Backend.DataAccessLayer
                             response.getCitizenInformationByNIC.Age = _sqlDataReader["Age"] != DBNull.Value ? Convert.ToInt32(_sqlDataReader["Age"]) : 0;
                             response.getCitizenInformationByNIC.Profession = _sqlDataReader["Profession"] != DBNull.Value ? _sqlDataReader["Profession"].ToString() : string.Empty;
                             response.getCitizenInformationByNIC.Email = _sqlDataReader["Email"] != DBNull.Value ? _sqlDataReader["Email"].ToString() : string.Empty;
+                            response.getCitizenInformationByNIC.Qualification = _sqlDataReader["Qualification"] != DBNull.Value ? _sqlDataReader["Qualification"].ToString() : string.Empty;
                         }
                         else
                         {
@@ -394,6 +395,7 @@ namespace Backend.DataAccessLayer
         public async Task<CitizenInformationByQualificationResponse> GetCitizenInformationByQualification(CitizenInformationByQualificationRequest request)
         {
             CitizenInformationByQualificationResponse response = new CitizenInformationByQualificationResponse();
+            response.getCitizenInformationByQualification = new List<GetCitizenInformationByQualification>();
 
             response.IsSuccess = true;
             response.Message = "Successful";
@@ -420,18 +422,28 @@ namespace Backend.DataAccessLayer
                     {
                         if (_sqlDataReader.HasRows)
                         {
-                            await _sqlDataReader.ReadAsync();
-                            response.getCitizenInformationByQualification = new GetCitizenInformationByQualification();
+                            while (await _sqlDataReader.ReadAsync())
+                            {
+                                GetCitizenInformationByQualification getResponse = new GetCitizenInformationByQualification();
 
-                            response.getCitizenInformationByQualification.Name = _sqlDataReader["Name"] != DBNull.Value ? _sqlDataReader["Name"].ToString() : string.Empty;
-                            response.getCitizenInformationByQualification.Address = _sqlDataReader["Address"] != DBNull.Value ? _sqlDataReader["Address"].ToString() : string.Empty;
-                            response.getCitizenInformationByQualification.Age = _sqlDataReader["Age"] != DBNull.Value ? Convert.ToInt32(_sqlDataReader["Age"]) : 0;
-                            response.getCitizenInformationByQualification.Profession = _sqlDataReader["Profession"] != DBNull.Value ? _sqlDataReader["Profession"].ToString() : string.Empty;
-                            response.getCitizenInformationByQualification.Email = _sqlDataReader["Email"] != DBNull.Value ? _sqlDataReader["Email"].ToString() : string.Empty;
+                                getResponse.NIC = _sqlDataReader["NIC"] != DBNull.Value ? _sqlDataReader["NIC"].ToString() : string.Empty;
+
+                                getResponse.Name = _sqlDataReader["Name"] != DBNull.Value ? _sqlDataReader["Name"].ToString() : string.Empty;
+
+                                getResponse.Address = _sqlDataReader["Address"] != DBNull.Value ? _sqlDataReader["Address"].ToString() : string.Empty;
+
+                                getResponse.Age = _sqlDataReader["Age"] != DBNull.Value ? Convert.ToInt32(_sqlDataReader["Age"]) : 0;
+
+                                getResponse.Profession = _sqlDataReader["Profession"] != DBNull.Value ? _sqlDataReader["Profession"].ToString() : string.Empty;
+
+                                getResponse.Email = _sqlDataReader["Email"] != DBNull.Value ? _sqlDataReader["Email"].ToString() : string.Empty;
+
+                                response.getCitizenInformationByQualification.Add(getResponse);
+                            }
                         }
                         else
                         {
-                            response.Message = "No Qualification Found";
+                            response.Message = "No data Return";
                         }
                     }
                 }
