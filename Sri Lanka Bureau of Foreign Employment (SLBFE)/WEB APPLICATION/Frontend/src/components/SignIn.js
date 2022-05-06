@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import AuthServices from '../services/AuthServices'
-import './SignUp.scss'
+import './SignIn&SignUp.scss'
+
+// Import materials
 import TextField from '@material-ui/core/TextField'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
@@ -26,6 +28,7 @@ export default class SignIn extends Component {
     }
   }
 
+  // Handle Close
   handleClose = (e, reason) => {
     if (reason === 'clickaway') {
       return
@@ -33,6 +36,7 @@ export default class SignIn extends Component {
     this.setState({ open: false })
   }
 
+  // Handle Radio butons change
   handleRadioChange = (e) => {
     this.setState({ Radiovalue: e.target.value })
   }
@@ -45,14 +49,17 @@ export default class SignIn extends Component {
     )
   }
 
+  // SignUp Handle
   handleSignUp = (e) => {
     this.props.history.push('/')
   }
 
+  // Admin SignIn path
   handleAdminSignIn = (e) => {
     this.props.history.push('/AdminSignIn')
   }
 
+  // Fields Validating
   CheckValidation() {
     console.log('CheckValidation Calling...')
 
@@ -66,6 +73,7 @@ export default class SignIn extends Component {
     }
   }
 
+  // Submit button handle
   handleSubmit = (e) => {
     this.CheckValidation()
     if (this.state.Email !== '' && this.state.Password !== '') {
@@ -92,7 +100,7 @@ export default class SignIn extends Component {
         })
     } else {
       console.log('Not Acceptable')
-      this.setState({ open: true, Message: 'Please Field Mandetory Field' })
+      this.setState({ open: true, Message: 'Please Fill Mandetory Field' })
     }
   }
 

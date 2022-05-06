@@ -1,7 +1,13 @@
 import React, { Component } from "react";
+
+// Import materials
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
+
+// Import scss
 import "./AdminHomePage.scss";
+
+// Import Services
 import AuthServices from "../services/AuthServices";
 
 const service = new AuthServices();
@@ -27,6 +33,7 @@ export default class AdminHomePage extends Component {
     this.GetCitizenList();
   }
 
+  // Get Citizen List
   GetCitizenList() {
     service
       .GetCitizenList()
@@ -40,16 +47,17 @@ export default class AdminHomePage extends Component {
       });
   }
 
+  // Handle Delete
   handleDelete = (datas) => {
     const data = {
-        userId: Number(datas.userId),
-    }
+      id: Number(datas.userId),
+    };
 
     service
       .DeleteCitizen(data)
       .then((data) => {
         console.log(data);
-        this.GetCitizenList()
+        this.GetCitizenList();
       })
       .catch((error) => {
         console.log(error);
@@ -58,7 +66,7 @@ export default class AdminHomePage extends Component {
 
   render() {
     let state = this.state;
-    let Self = this
+    let Self = this;
     return (
       <div className="MainContainer">
         <div className="SubContainer">

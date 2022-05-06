@@ -1,90 +1,100 @@
-import React, { Component } from 'react'
-import AuthServices from '../services/AuthServices'
-import './SignUp.scss'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
-import Snackbar from '@material-ui/core/Snackbar'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
+import React, { Component } from "react";
 
-const authServices = new AuthServices()
+// Import Services
+import AuthServices from "../services/AuthServices";
+
+// Import scss
+import "./SignIn&SignUp.scss";
+
+// Import materials
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
+const authServices = new AuthServices();
 
 export default class AdminSignIn extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      UserName: '',
+      UserName: "",
       UserNameFlag: false,
-      Password: '',
+      Password: "",
       PasswordFlag: false,
       open: false,
-      Message: '',
-    }
+      Message: "",
+    };
   }
 
+  // Handle Close
   handleClose = (e, reason) => {
-    if (reason === 'clickaway') {
-      return
+    if (reason === "clickaway") {
+      return;
     }
-    this.setState({ open: false })
-  }
+    this.setState({ open: false });
+  };
 
   handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     this.setState(
       { [name]: value },
-      console.log('Name : ', name, 'Value : ', value),
-    )
-  }
+      console.log("Name : ", name, "Value : ", value)
+    );
+  };
 
+  // SignIn Handle
   handleSignIn = (e) => {
-    this.props.history.push('/SignIn')
-  }
+    this.props.history.push("/SignIn");
+  };
 
+  // Fields Validating
   CheckValidation() {
-    console.log('CheckValidation Calling...')
+    console.log("CheckValidation Calling...");
 
-    this.setState({ UserNameFlag: false, PasswordFlag: false })
+    this.setState({ UserNameFlag: false, PasswordFlag: false });
 
-    if (this.state.UserName === '') {
-      this.setState({ UserNameFlag: true })
+    if (this.state.UserName === "") {
+      this.setState({ UserNameFlag: true });
     }
-    if (this.state.Password === '') {
-      this.setState({ PasswordFlag: true })
+    if (this.state.Password === "") {
+      this.setState({ PasswordFlag: true });
     }
   }
 
+  // Submit handle
   handleSubmit = (e) => {
-    this.CheckValidation()
-    if (this.state.UserName !== '' && this.state.Password !== '') {
-      console.log('Acceptable')
+    this.CheckValidation();
+    if (this.state.UserName !== "" && this.state.Password !== "") {
+      console.log("Acceptable");
       let data = {
         username: this.state.UserName,
         password: this.state.Password,
-      }
+      };
       authServices
         .AdminSignIn(data)
         .then((data) => {
-          console.log('Data : ', data)
+          console.log("Data : ", data);
           if (data.data.isSuccess) {
-            this.props.history.push('/AdminHomePage')
+            this.props.history.push("/AdminHomePage");
           } else {
-            console.log('Something Went Wrong')
-            this.setState({ open: true, Message: 'LogIn Failed' })
+            console.log("Something Went Wrong");
+            this.setState({ open: true, Message: "LogIn Failed" });
           }
         })
         .catch((error) => {
-          console.log('Error : ', error)
-          this.setState({ open: true, Message: 'Something Went Wrong' })
-        })
+          console.log("Error : ", error);
+          this.setState({ open: true, Message: "Something Went Wrong" });
+        });
     } else {
-      console.log('Not Acceptable')
-      this.setState({ open: true, Message: 'Please Field Mandetory Field' })
+      console.log("Not Acceptable");
+      this.setState({ open: true, Message: "Please Fill Mandetory Field" });
     }
-  }
+  };
 
   render() {
-    console.log('State : ', this.state)
+    console.log("State : ", this.state);
     return (
       <div className="SignUp-Container">
         <div className="SignUp-SubContainer">
@@ -114,7 +124,7 @@ export default class AdminSignIn extends Component {
               />
             </form>
           </div>
-          <div className="Buttons" style={{ alignItems: 'flex-start' }}>
+          <div className="Buttons" style={{ alignItems: "flex-start" }}>
             <Button className="Btn" color="primary" onClick={this.handleSignIn}>
               User Sign In
             </Button>
@@ -130,8 +140,8 @@ export default class AdminSignIn extends Component {
         </div>
         <Snackbar
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
+            vertical: "bottom",
+            horizontal: "left",
           }}
           open={this.state.open}
           autoHideDuration={6000}
@@ -154,6 +164,6 @@ export default class AdminSignIn extends Component {
           }
         />
       </div>
-    )
+    );
   }
 }

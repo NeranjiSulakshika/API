@@ -1,32 +1,33 @@
-import React, { Component } from 'react'
-import './SignUp.scss'
-import AuthServices from '../services/AuthServices.js'
-import TextField from '@material-ui/core/TextField'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Button from '@material-ui/core/Button'
+import React, { Component } from "react";
+import "./SignIn&SignUp.scss";
+import AuthServices from "../services/AuthServices.js";
 
-import Snackbar from '@material-ui/core/Snackbar'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
+// Import materials
+import TextField from "@material-ui/core/TextField";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
-const authServices = new AuthServices()
+const authServices = new AuthServices();
 
 export default class SignUp extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      Radiovalue: 'Citizen',
-      NIC: '',
-      Name: '',
-      Address: '',
-      Age: '',
-      Profession: '',
-      Email: '',
-      Password: '',
-      ConfirmPassword: '',
-      Qualification: '',
+      Radiovalue: "Citizen",
+      NIC: "",
+      Name: "",
+      Address: "",
+      Age: "",
+      Profession: "",
+      Email: "",
+      Password: "",
+      ConfirmPassword: "",
+      Qualification: "",
 
       NICFlag: false,
       NameFlag: false,
@@ -39,19 +40,21 @@ export default class SignUp extends Component {
       QualificationFlag: false,
 
       open: false,
-      Message: '',
-    }
+      Message: "",
+    };
   }
 
+  // Handle Close
   handleClose = (e, reason) => {
-    if (reason === 'clickaway') {
-      return
+    if (reason === "clickaway") {
+      return;
     }
-    this.setState({ open: false })
-  }
+    this.setState({ open: false });
+  };
 
+  // Fields Validating
   CheckValidity() {
-    console.log('Check Validity Calling')
+    console.log("Check Validity Calling");
     //Reset Flag
     this.setState({
       NICFlag: false,
@@ -63,49 +66,50 @@ export default class SignUp extends Component {
       PasswordFlag: false,
       ConfirmPasswordFlag: false,
       QualificationFlag: false,
-    })
+    });
 
-    if (this.state.NIC === '') {
-      this.setState({ NICFlag: true })
+    if (this.state.NIC === "") {
+      this.setState({ NICFlag: true });
     }
-    if (this.state.Name === '') {
-      this.setState({ NameFlag: true })
+    if (this.state.Name === "") {
+      this.setState({ NameFlag: true });
     }
-    if (this.state.Address === '') {
-      this.setState({ AddressFlag: true })
+    if (this.state.Address === "") {
+      this.setState({ AddressFlag: true });
     }
-    if (this.state.Age === '') {
-      this.setState({ AgeFlag: true })
+    if (this.state.Age === "") {
+      this.setState({ AgeFlag: true });
     }
-    if (this.state.Profession === '') {
-      this.setState({ ProfessionFlag: true })
+    if (this.state.Profession === "") {
+      this.setState({ ProfessionFlag: true });
     }
-    if (this.state.Email === '') {
-      this.setState({ EmailFlag: true })
+    if (this.state.Email === "") {
+      this.setState({ EmailFlag: true });
     }
-    if (this.state.Password === '') {
-      this.setState({ PasswordFlag: true })
+    if (this.state.Password === "") {
+      this.setState({ PasswordFlag: true });
     }
-    if (this.state.ConfirmPassword === '') {
-      this.setState({ ConfirmPasswordFlag: true })
+    if (this.state.ConfirmPassword === "") {
+      this.setState({ ConfirmPasswordFlag: true });
     }
-    if (this.state.Qualification === '') {
-      this.setState({ QualificationFlag: true })
+    if (this.state.Qualification === "") {
+      this.setState({ QualificationFlag: true });
     }
   }
 
+  // Submit handle
   handleSubmit = (e) => {
-    this.CheckValidity()
+    this.CheckValidity();
     if (
-      this.state.NIC !== '' &&
-      this.state.Name !== '' &&
-      this.state.Address !== '' &&
-      this.state.Age !== '' &&
-      this.state.Profession !== '' &&
-      this.state.Email !== '' &&
-      this.state.Password !== '' &&
-      this.state.ConfirmPassword !== '' &&
-      this.state.Qualification !== ''
+      this.state.NIC !== "" &&
+      this.state.Name !== "" &&
+      this.state.Address !== "" &&
+      this.state.Age !== "" &&
+      this.state.Profession !== "" &&
+      this.state.Email !== "" &&
+      this.state.Password !== "" &&
+      this.state.ConfirmPassword !== "" &&
+      this.state.Qualification !== ""
     ) {
       const data = {
         nic: this.state.NIC,
@@ -118,60 +122,68 @@ export default class SignUp extends Component {
         configPassword: this.state.ConfirmPassword,
         affiliation: this.state.Radiovalue,
         qualification: this.state.Qualification,
-      }
+      };
 
       authServices
         .SignUp(data)
         .then((data) => {
-          console.log('data : ', data)
+          console.log("data : ", data);
           if (data.data.isSuccess) {
-            this.props.history.push('/SignIn')
+            this.props.history.push("/SignIn");
           } else {
-            console.log('Sign Up Failed')
-            this.setState({ open: true, Message: 'Sign Up Failed' })
+            console.log("Sign Up Failed");
+            this.setState({ open: true, Message: "Sign Up Failed" });
           }
         })
         .catch((error) => {
-          console.log('error : ', error)
-          this.setState({ open: true, Message: 'Something Went Wrong' })
-        })
+          console.log("error : ", error);
+          this.setState({ open: true, Message: "Something Went Wrong" });
+        });
     } else {
-      console.log('Not Acceptable')
-      this.setState({ open: true, Message: 'Please Fill Required Field' })
+      console.log("Not Acceptable");
+      this.setState({ open: true, Message: "Please Fill Required Field" });
     }
-  }
+  };
 
+  // Handle Radio butons change
   handleRadioChange = (e) => {
-    this.setState({ Radiovalue: e.target.value })
-  }
+    this.setState({ Radiovalue: e.target.value });
+  };
 
   handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     this.setState(
       { [name]: value },
-      console.log('Name : ', name, 'Value : ', value),
-    )
-  }
+      console.log("Name : ", name, "Value : ", value)
+    );
+  };
 
+  // SignIn Handle
   handleSignIn = (e) => {
-    this.props.history.push('/SignIn')
-  }
+    this.props.history.push("/SignIn");
+  };
 
+  // Admin SignIn path
   handleAdminSignIn = (e) => {
-    this.props.history.push('/AdminSignIn')
-  }
+    this.props.history.push("/AdminSignIn");
+  };
 
   render() {
-    console.log('state : ', this.state)
+    console.log("state : ", this.state);
     return (
       <div className="SignUp-Container">
         <div className="SignUp-SubContainer">
           <div className="Header">Sign Up</div>
           <div className="Body">
             <form className="form">
-            <Button id="adminLogin" className="Btn" color="primary" onClick={this.handleAdminSignIn}>
-              Admin
-            </Button>
+              <Button
+                id="adminLogin"
+                className="Btn"
+                color="primary"
+                onClick={this.handleAdminSignIn}
+              >
+                Admin
+              </Button>
               <TextField
                 className="TextField"
                 name="NIC"
@@ -302,8 +314,8 @@ export default class SignUp extends Component {
         </div>
         <Snackbar
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
+            vertical: "bottom",
+            horizontal: "left",
           }}
           open={this.state.open}
           autoHideDuration={6000}
@@ -326,6 +338,6 @@ export default class SignUp extends Component {
           }
         />
       </div>
-    )
+    );
   }
 }
