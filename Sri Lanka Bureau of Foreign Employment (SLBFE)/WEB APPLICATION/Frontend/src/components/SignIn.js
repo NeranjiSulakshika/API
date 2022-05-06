@@ -107,9 +107,9 @@ export default class SignIn extends Component {
   render() {
     console.log('State : ', this.state)
     return (
-      <div className="SignUp-Container">
-        <div className="SignUp-SubContainer">
-          <div className="Header">Sign In</div>
+      <div className="SignIn-Container">
+        <div className="SignIn-SubContainer">
+          <div className="SignIn-Header">Sign In</div>
           <div className="Body">
             <form className="form">
             <Button id="adminLogin" className="Btn" color="primary" onClick={this.handleAdminSignIn}>
@@ -159,13 +159,14 @@ export default class SignIn extends Component {
             </form>
           </div>
           <div className="Buttons" style={{ alignItems: 'flex-start' }}>
-            <Button className="Btn" color="primary" onClick={this.handleSignUp}>
+            <Button className="Btn" id='SignUp-Button' onClick={this.handleSignUp}>
               Sign Up
             </Button>
             <Button
               className="Btn"
               variant="contained"
               color="primary"
+              id='Submit-Button'
               onClick={this.handleSubmit}
             >
               Sign In

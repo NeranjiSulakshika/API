@@ -96,9 +96,9 @@ export default class AdminSignIn extends Component {
   render() {
     console.log("State : ", this.state);
     return (
-      <div className="SignUp-Container">
-        <div className="SignUp-SubContainer">
-          <div className="Header">Admin Sign In</div>
+      <div className="SignUp-Container" id="Admin-SignUp-Container">
+        <div className="SignUp-SubContainer" id="Admin-SignUp-SubContainer">
+          <div className="Header" id="Admin-Header">Admin Sign In</div>
           <div className="Body">
             <form className="form">
               <TextField
@@ -125,13 +125,14 @@ export default class AdminSignIn extends Component {
             </form>
           </div>
           <div className="Buttons" style={{ alignItems: "flex-start" }}>
-            <Button className="Btn" color="primary" onClick={this.handleSignIn}>
+            <Button className="Btn" id="SignIn-Button" onClick={this.handleSignIn}>
               User Sign In
             </Button>
             <Button
               className="Btn"
               variant="contained"
               color="primary"
+              id="Admin-Submit-Button"
               onClick={this.handleSubmit}
             >
               Admin Sign In

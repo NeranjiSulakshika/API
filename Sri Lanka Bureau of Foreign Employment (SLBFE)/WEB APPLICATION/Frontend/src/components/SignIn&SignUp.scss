@@ -4,11 +4,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #b8eaff;
 
     .SignUp-SubContainer {
         width: 450px;
         border: 0.5px solid lightgray;
         border-radius: 10px;
+        background-color: white;
 
         .Header {
             height: 12%;
@@ -19,7 +21,7 @@
             font-family: 'Roboto';
             font-size: 25px;
             font-weight: 500;
-            color: blue;
+            color: #0090cd;
             margin-top: 17%;
             margin-bottom: -36%;
         }
@@ -66,6 +68,30 @@
                 text-transform: none;
             }
         }
+
+        #Submit-Button {
+            background-color: #09acf1;
+        }
+
+        #SignIn-Button {
+            font-weight: bold;
+            color: #0082b9;
+        }
+
+        #SignIn-Button:hover {
+            font-weight: bold;
+            color: white;
+            background-color: #0082b9;
+        }
+    
+        #adminLogin {
+            margin-left: 75%;
+            margin-top: -30%;
+            margin-bottom: 16%;
+            background-color: #0f8fc5;
+            color: white;
+            font-weight: bold;
+        }
     }
 
     .SignUp-SubContainer:hover {
@@ -73,11 +99,134 @@
     }
 }
 
-#adminLogin {
-    margin-left: 75%;
-    margin-top: -30%;
-    margin-bottom: 16%;
-    background-color: cornflowerblue;
-    color: white;
-    font-weight: bold;
+
+.SignIn-Container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffd9cc;
+
+    .SignIn-SubContainer {
+        width: 450px;
+        border: 0.5px solid lightgray;
+        border-radius: 10px;
+        background-color: white;
+
+        .SignIn-Header {
+            height: 12%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            font-family: 'Roboto';
+            font-size: 25px;
+            font-weight: 500;
+            color: #ff4100;
+            margin-top: 17%;
+            margin-bottom: -36%;
+        }
+
+        .Body {
+            height: 70%;
+            width: 100%;
+
+            .form{
+                height: 100%;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                margin-top: 48%;
+
+                .TextField{
+                    width: 300px;
+                    margin: 5px;
+                }
+
+                .Affiliations{
+                    display: block;
+                    width: 100%;
+                    .AffiliationValue{
+                        width: 100px;
+                    }
+                }
+            }
+        }
+
+        .Buttons {
+            height: 15%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin-bottom: 12%;
+            margin-top: 10%;
+
+            .Btn{
+                height: 35px;
+                text-transform: none;
+            }
+        }
+
+        #Submit-Button {
+            background-color: #ff885f;
+        }
+
+        #SignUp-Button {
+            font-weight: bold;
+            color: #ff885f;
+        }
+
+        #SignUp-Button:hover {
+            font-weight: bold;
+            color: white;
+            background-color: #ff6b39;
+        }
+
+        #adminLogin {
+            margin-left: 75%;
+            margin-top: -30%;
+            margin-bottom: 16%;
+            background-color: #ff6b39;
+            color: white;
+            font-weight: bold;
+        }
+    }
+
+    .SignUp-SubContainer:hover {
+        box-shadow: 0 0 5px -2px black;
+    }
+}
+
+
+
+#Admin-SignUp-Container {
+    background-color: #ffdfea;
+
+    #Admin-SignUp-SubContainer {
+        background-color: #ffffff;
+    }
+    
+    #Admin-Header {
+        color: #ff00bc;
+    }
+
+    #Admin-Submit-Button {
+        font-weight: bold;
+        background-color: #ff6cd8;
+    }
+
+    #SignIn-Button {
+        font-weight: bold;
+        color: #ff82de;
+    }
+
+    #SignIn-Button:hover {
+        font-weight: bold;
+        color: white;
+        background-color: #ff82de;
+    }
 }

@@ -299,13 +299,14 @@ export default class SignUp extends Component {
             </form>
           </div>
           <div className="Buttons">
-            <Button className="Btn" color="primary" onClick={this.handleSignIn}>
+            <Button className="Btn" id='SignIn-Button' onClick={this.handleSignIn}>
               Sign In
             </Button>
             <Button
               className="Btn"
               variant="contained"
               color="primary"
+              id="Submit-Button"
               onClick={this.handleSubmit}
             >
               Sign Up
