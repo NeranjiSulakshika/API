@@ -1,120 +1,137 @@
-import React, { Component } from 'react'
-import AuthServices from '../services/AuthServices'
-import './SignIn&SignUp.scss'
+import React, { Component } from "react";
+import AuthServices from "../services/AuthServices";
+import "./SignIn&SignUp.scss";
 
 // Import materials
-import TextField from '@material-ui/core/TextField'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Button from '@material-ui/core/Button'
-import Snackbar from '@material-ui/core/Snackbar'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
+import TextField from "@material-ui/core/TextField";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 
-const authServices = new AuthServices()
+const authServices = new AuthServices();
 
 export default class SignIn extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      Radiovalue: 'Citizen',
-      Email: '',
+      Radiovalue: "Citizen",
+      Email: "",
       EmailFlag: false,
-      Password: '',
+      Password: "",
       PasswordFlag: false,
       open: false,
-      Message: '',
-    }
+      Message: "",
+    };
   }
 
   // Handle Close
   handleClose = (e, reason) => {
-    if (reason === 'clickaway') {
-      return
+    if (reason === "clickaway") {
+      return;
     }
-    this.setState({ open: false })
-  }
+    this.setState({ open: false });
+  };
 
   // Handle Radio butons change
   handleRadioChange = (e) => {
-    this.setState({ Radiovalue: e.target.value })
-  }
+    this.setState({ Radiovalue: e.target.value });
+  };
 
   handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     this.setState(
       { [name]: value },
-      console.log('Name : ', name, 'Value : ', value),
-    )
-  }
+      console.log("Name : ", name, "Value : ", value)
+    );
+  };
 
   // SignUp Handle
   handleSignUp = (e) => {
-    this.props.history.push('/')
-  }
+    this.props.history.push("/");
+  };
 
   // Admin SignIn path
   handleAdminSignIn = (e) => {
-    this.props.history.push('/AdminSignIn')
-  }
+    this.props.history.push("/AdminSignIn");
+  };
 
   // Fields Validating
   CheckValidation() {
-    console.log('CheckValidation Calling...')
+    console.log("CheckValidation Calling...");
 
-    this.setState({ EmailFlag: false, PasswordFlag: false })
+    this.setState({ EmailFlag: false, PasswordFlag: false });
 
-    if (this.state.Email === '') {
-      this.setState({ EmailFlag: true })
+    if (this.state.Email === "") {
+      this.setState({ EmailFlag: true });
     }
-    if (this.state.Password === '') {
-      this.setState({ PasswordFlag: true })
+    if (this.state.Password === "") {
+      this.setState({ PasswordFlag: true });
     }
   }
 
   // Submit button handle
   handleSubmit = (e) => {
-    this.CheckValidation()
-    if (this.state.Email !== '' && this.state.Password !== '') {
-      console.log('Acceptable')
+    this.CheckValidation();
+    if (this.state.Email !== "" && this.state.Password !== "") {
+      console.log("Acceptable");
       let data = {
         email: this.state.Email,
         password: this.state.Password,
         affiliation: this.state.Radiovalue,
-      }
+      };
       authServices
         .SignIn(data)
         .then((data) => {
-          console.log('Data : ', data)
+          console.log("Data : ", data);
           if (data.data.isSuccess) {
-            this.props.history.push('/HomePage')
+            this.props.history.push("/HomePage");
           } else {
-            console.log('Something Went Wrong')
-            this.setState({ open: true, Message: 'LogIn Failed' })
+            console.log("Something Went Wrong");
+            this.setState({ open: true, Message: "LogIn Failed" });
           }
         })
         .catch((error) => {
-          console.log('Error : ', error)
-          this.setState({ open: true, Message: 'Something Went Wrong' })
-        })
+          console.log("Error : ", error);
+          this.setState({ open: true, Message: "Something Went Wrong" });
+        });
     } else {
-      console.log('Not Acceptable')
-      this.setState({ open: true, Message: 'Please Fill Mandetory Field' })
+      console.log("Not Acceptable");
+      this.setState({ open: true, Message: "Please Fill Mandetory Field" });
     }
-  }
+  };
 
   render() {
-    console.log('State : ', this.state)
+    console.log("State : ", this.state);
     return (
       <div className="SignIn-Container">
+        <div>
+          <AppBar position="static" className="navHeader">
+            <Toolbar variant="dense">
+              <Typography variant="h6" color="inherit" className="headerLabel">
+                Sign-In
+              </Typography>
+            </Toolbar>
+          </AppBar>
+        </div>
         <div className="SignIn-SubContainer">
           <div className="SignIn-Header">Sign In</div>
           <div className="Body">
             <form className="form">
-            <Button id="adminLogin" className="Btn" color="primary" onClick={this.handleAdminSignIn}>
-              Admin
-            </Button>
+              <Button
+                id="adminLogin"
+                className="Btn"
+                color="primary"
+                onClick={this.handleAdminSignIn}
+              >
+                Admin
+              </Button>
 
               <TextField
                 className="TextField"
@@ -158,15 +175,19 @@ export default class SignIn extends Component {
               </RadioGroup>
             </form>
           </div>
-          <div className="Buttons" style={{ alignItems: 'flex-start' }}>
-            <Button className="Btn" id='SignUp-Button' onClick={this.handleSignUp}>
+          <div className="Buttons" style={{ alignItems: "flex-start" }}>
+            <Button
+              className="Btn"
+              id="SignUp-Button"
+              onClick={this.handleSignUp}
+            >
               Sign Up
             </Button>
             <Button
               className="Btn"
               variant="contained"
               color="primary"
-              id='Submit-Button'
+              id="Submit-Button"
               onClick={this.handleSubmit}
             >
               Sign In
@@ -175,8 +196,8 @@ export default class SignIn extends Component {
         </div>
         <Snackbar
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
+            vertical: "bottom",
+            horizontal: "left",
           }}
           open={this.state.open}
           autoHideDuration={6000}
@@ -199,6 +220,6 @@ export default class SignIn extends Component {
           }
         />
       </div>
-    )
+    );
   }
 }

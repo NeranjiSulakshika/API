@@ -230,3 +230,45 @@
         background-color: #ff82de;
     }
 }
+
+.SignIn-Container {
+    .navHeader {
+        color: #fff !important;
+        background-color: #ff885f !important;
+        margin-top: -413% !important;
+        width: 1708% !important;
+        margin-left: -603% !important;
+    
+        .headerLabel {
+            margin-left: 1%;
+        }
+    }
+}
+
+.SignUp-Container {
+    .navHeader {
+        color: #fff !important;
+        background-color: #0f8fc5 !important;
+        margin-top: -384% !important;
+        width: 1583% !important;
+        margin-left: -555% !important;
+    
+        .headerLabel {
+            margin-left: 1%;
+        }
+    }
+}
+
+#Admin-SignUp-Container {
+    .navHeader {
+        color: #fff !important;
+        background-color: #ff6cd8 !important;
+        margin-top: -414% !important;
+        width: 1708% !important;
+        margin-left: -603% !important;
+    
+        .headerLabel {
+            margin-left: 1%;
+        }
+    }
+}

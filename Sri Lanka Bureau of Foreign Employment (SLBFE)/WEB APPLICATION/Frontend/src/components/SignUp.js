@@ -11,6 +11,9 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 
 const authServices = new AuthServices();
 
@@ -172,6 +175,15 @@ export default class SignUp extends Component {
     console.log("state : ", this.state);
     return (
       <div className="SignUp-Container">
+      <div>
+        <AppBar position="static" className="navHeader">
+          <Toolbar variant="dense">
+            <Typography variant="h6" color="inherit" className="headerLabel">
+              Sign-Up
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </div>
         <div className="SignUp-SubContainer">
           <div className="Header">Sign Up</div>
           <div className="Body">
