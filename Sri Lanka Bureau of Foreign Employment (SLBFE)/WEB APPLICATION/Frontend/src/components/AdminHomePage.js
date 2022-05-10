@@ -50,7 +50,7 @@ export default class AdminHomePage extends Component {
   // Handle Delete
   handleDelete = (datas) => {
     const data = {
-      id: Number(datas.userId),
+      userId: Number(datas.userId),
     };
 
     service

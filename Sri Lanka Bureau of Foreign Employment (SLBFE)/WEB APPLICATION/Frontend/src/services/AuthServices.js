@@ -27,6 +27,7 @@ export default class AuthServices {
 
   // Delete Citizen
   DeleteCitizen(data) {
+    console.log('Url: ', Configurations.DeleteCitizen);
     return axiosServices.delete(
       Configurations.DeleteCitizen,
       { data: { userId: data.userId } },

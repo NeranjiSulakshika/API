@@ -7,7 +7,7 @@ namespace Backend.Model
 {
     public class SignUpRequest
     {
-        //NIC, Name, Address, Age, Profession, Email, PassWord, Affiliation
+        //NIC, Name, Address, Age, Profession, Email, PassWord, Affiliation, Qualification
         public string NIC { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }

@@ -14,7 +14,6 @@ namespace Backend.Model
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
-        public DeleteCitizen deleteCitizen { get; set; }
     }
 
     public class DeleteCitizen
