@@ -41,7 +41,7 @@ namespace Backend.DataAccessLayer
         /// <summary>
         /// Update Citizen Information
         /// </summary>
-        //public Task<UpdateCitizenInformationResponse> UpdateCitizenInformationRequest(UpdateCitizenInformationRequest request);
+        public Task<UpdateCitizenInformationResponse> UpdateCitizenInformationRequest(UpdateCitizenInformationRequest request);
 
         /// <summary>
         /// Delete Citizen Account

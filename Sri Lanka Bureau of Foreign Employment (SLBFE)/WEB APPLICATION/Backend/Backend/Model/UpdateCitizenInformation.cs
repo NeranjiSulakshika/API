@@ -7,7 +7,7 @@ namespace Backend.Model
 {
     public class UpdateCitizenInformationRequest
     {
-        public int UserId { get; set; }
+        public string NIC { get; set; }
         public string Qualification { get; set; }
     }
 

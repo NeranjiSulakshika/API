@@ -172,13 +172,13 @@ namespace Backend.Controllers
 
 
         /// <summary>
-        /// Update Citizen's Information
+        /// Update Citizen's Qualification
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        /*[AllowAnonymous]
+        [AllowAnonymous]
         [HttpPut]
-        [Route("UpdateCitizen")]
+        [Route("UpdateQualification/{NIC}")]
         public async Task<IActionResult> UpdateCitizenInformation(UpdateCitizenInformationRequest request)
         {
             UpdateCitizenInformationResponse response = null;
@@ -193,7 +193,7 @@ namespace Backend.Controllers
             }
 
             return Ok(response);
-        }*/
+        }
 
 
         /// <summary>

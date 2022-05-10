@@ -468,7 +468,7 @@ namespace Backend.DataAccessLayer
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        /*public async Task<UpdateCitizenInformationResponse> UpdateCitizenInformationRequest(UpdateCitizenInformationRequest request)
+        public async Task<UpdateCitizenInformationResponse> UpdateCitizenInformationRequest(UpdateCitizenInformationRequest request)
         {
             UpdateCitizenInformationResponse response = new UpdateCitizenInformationResponse();
 
@@ -480,13 +480,13 @@ namespace Backend.DataAccessLayer
                 if (_mySqlConnection != null)
                 {
                     //SQL Query
-                    string SqlQuery = @"UPDATE slbfe.user_details SET Qualification=@Qualification where UserId=@UserId ";
+                    string SqlQuery = @"UPDATE slbfe.user_details SET Qualification=@Qualification where NIC=@NIC ";
 
                     using (MySqlCommand sqlCommand = new MySqlCommand(SqlQuery, _mySqlConnection))
                     {
                         sqlCommand.CommandType = System.Data.CommandType.Text;
                         sqlCommand.CommandTimeout = ConnectionTimeOut;
-                        sqlCommand.Parameters.AddWithValue("@UserId", request.UserId);
+                        sqlCommand.Parameters.AddWithValue("@NIC", request.NIC);
                         sqlCommand.Parameters.AddWithValue("@Qualification", request.Qualification);
                         await _mySqlConnection.OpenAsync();
                         int Status = await sqlCommand.ExecuteNonQueryAsync();
@@ -512,7 +512,7 @@ namespace Backend.DataAccessLayer
             }
 
             return response;
-        }*/
+        }
 
 
         /// <summary>
